@@ -8,15 +8,23 @@ const Team = ({ team }) => {
 
     const { theme } = useTheme()
 
-    return (
-        <View style={tw.style(`border-[${team.winner ? theme.colors.border100 : theme.colors.border}]`, `flex flex-row justify-between items-center py-[2px] pr-2 border-r-[2px]`)}>
+    
 
-            <View style={tw`flex flex-row flex-wrap gap-2 items-center`} >
-                { get_logo(team,22) }
-                <Text style={tw.style(`text-[${theme.colors.text}]`, `text-sm`, team.winner && "font-semibold")}>{team.name}</Text>
+    return (
+        <View style={tw.style(`border-[${team.winner ? theme.colors.border100 : theme.colors.border}]`, ` flex flex-row justify-between items-center py-[3px] pr-2 border-r-[2px]`)}>
+
+            <View style={tw`flex flex-row gap-2 items-center w-[79%]`} >
+                {get_logo(team, 22)}
+            
+                <Text 
+                    numberOfLines={1} 
+                    style={tw.style(`text-sm text-[${theme.colors.text}]`, team.winner && `font-semibold`)}
+                >
+                    {team.displayName}
+                </Text>
             </View>
 
-            <View style={tw.style(`flex flex-row items-end`)}>
+            <View style={tw.style(`flex flex-row items-end gap-[2px] `)}>
                 <Text style={tw.style(`text-[${theme.colors.text}]`, ` text-lg font-semibold`)}>{team.score}</Text>
                 {
                     "shootoutScore" in team &&

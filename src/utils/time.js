@@ -32,3 +32,38 @@ export const convert_timestamp = (timestamp) => {
         
     };
 }
+
+
+export const format_date = (date) => {
+
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    if (is_same_day(date, today)) {
+        return "HOY";
+    } else if (is_same_day(date, tomorrow)) {
+        return "MAÑANA";
+    } else if (is_same_day(date, yesterday)) {
+        return "AYER";
+    } else {
+        const days = ['DOM', 'LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB'];
+        const days_lower = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+        const dayOfWeek = days_lower[date.getDay()];
+        const formatedDate = `${dayOfWeek} ${format_number(date.getDate())}/${format_number(date.getMonth() + 1)}/${format_number(date.getFullYear() % 100)}`;
+        return formatedDate;
+    }
+}
+
+const format_number = (number) => {
+    return number < 10 ? '0' + number : number;
+}
+
+
+export const is_same_day = (date1, date2) => {
+    return date1.getDate() === date2.getDate() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getFullYear() === date2.getFullYear();
+}

@@ -1,24 +1,29 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import tw from 'twrnc'
-import GameCard from '../game/GameCard'
+import GameCard from './GameCard'
 import { useTheme } from '../../context/ThemeContext'
 import { get_flag } from '../../utils/match'
+import { Divider } from 'react-native-paper'
 
 const LeagueCard = ({ league }) => {
 
     const { theme } = useTheme()
 
     return (
-        <View style={tw.style(`bg-[${theme.colors.card}]`,"flex flex-col px-2  shadow-md")}>
-            <View style={tw`flex flex-row justify-center items-center gap-2 py-3`}>
-                { get_flag(league,20) }
-                <Text style={tw`text-white`}>{league.name.replace("Argentine", "").toUpperCase()}</Text>
+        <View style={tw`bg-[${theme.colors.card}] flex flex-col shadow-md`}>
+
+            <View style={tw`flex flex-row justify-start items-center gap-2 px-2 min-h-[42px]`}>
+                {get_flag(league, 30)}
+                <Text style={tw`text-[${theme.colors.text}] font-semibold`}>{league.name.replace("Argentine", "").toUpperCase()}</Text>
             </View>
 
             {
-                league.events.map((game,i) => (
-                    <GameCard key={i} game={game} isTournament={league.isTournament}/>
+                league.events.map((game, i) => (
+                    <View key={i}>
+                        <Divider style={tw`bg-[${theme.colors.border}] h-[1px] w-[97%] mx-auto`}/>
+                        <GameCard  game={game} isTournament={league.isTournament} />
+                    </View>
                 ))
             }
 

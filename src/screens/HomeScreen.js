@@ -1,47 +1,110 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, RefreshControl, TouchableNativeFeedback } from 'react-native'
 import tw from 'twrnc'
 import { fetchAllLeagues } from '../utils/fetch'
 import LeagueCard from '../components/home/LeagueCard'
 import { date_to_YYYYMMDD } from '../utils/time'
 import ModalComponent from '../components/home/ModalComponent'
-import { Button } from 'react-native-paper'
+import { FAB } from 'react-native-paper'
+import LoadingCard from '../components/home/LoadingCard'
+import HomeButtons from '../components/home/HomeButtons'
+import { useTheme } from '../context/ThemeContext'
+
 
 const HomeScreen = () => {
   const [leagues, setLeagues] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [modalVisible,setModalVisible] = useState(true)
+  const [modalVisible, setModalVisible] = useState(false)
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [refreshing, setRefreshing] = useState(false); 
+  const {theme}  = useTheme()
 
   useEffect(() => {
 
+    _fetchAllLeagues()
+
+    const intervalId = setInterval(() => {
+      _fetchAllLeagues()
+    }, 1000 * 120)
+
+    return () => clearInterval(intervalId)
+
+  }, [selectedDate])
+
+
+  const _fetchAllLeagues = () => {
+
     fetchAllLeagues(date_to_YYYYMMDD(selectedDate))
-      .then(leagues => setLeagues(leagues))
+      .then(resp => setLeagues(resp))
+      .then(() => setRefreshing(false))
       .finally(() => setLoading(false))
 
-  }, [])
+  }
+
+  const onRefresh = () => {
+    setLoading(true)
+    setRefreshing(true);
+    _fetchAllLeagues()
+
+  };
 
 
-  if (loading)
-    return <Text style={tw`text-white`}>Cargando...</Text>
+
 
 
   return (
-    <ScrollView>
 
-      <Button onPress={()=>setModalVisible(!modalVisible)}>Open Modal</Button>
+    <View >
+      {/* <Button buttonColor='navy' onPress={() => setModalVisible(!modalVisible)}>Open Modal</Button> */}
 
-      <View style={tw`flex flex-col gap-4 mt-3 pb-10 mx-1`}>
-        {
-          leagues.map((league,i) => (
-            <LeagueCard key={i} league={league} />
-          ))
-        }
-      </View>
+      <HomeButtons
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        setLoading={setLoading}
+      />
 
-      <ModalComponent modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      {
+        loading ?
+          <LoadingCard />
 
-    </ScrollView>
+          :
+
+          <ScrollView
+            contentContainerStyle={tw`flex flex-col gap-4 mx-1`}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#0000']} enabled />}
+          >
+
+
+
+            <View style={tw`flex flex-col gap-4 mt-4 mb-15`}>
+              {
+                leagues?.map((league, i) => (
+                  <LeagueCard key={i} league={league} />
+                ))
+              }
+            </View>
+
+            <ModalComponent
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              setLoading={setLoading}
+            />
+
+          </ScrollView>
+      }
+
+
+      <FAB
+        icon="calendar"
+        color='white'
+        mode='elevated'
+        style={tw`absolute bottom-15 right-5 bg-[${theme.colors.accent}]`}
+        onPress={() => setModalVisible(!modalVisible)}
+      />
+
+    </View>
   )
 }
 
