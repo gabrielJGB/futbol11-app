@@ -9,6 +9,7 @@ import { FAB } from 'react-native-paper'
 import LoadingCard from '../components/home/LoadingCard'
 import HomeButtons from '../components/home/HomeButtons'
 import { useTheme } from '../context/ThemeContext'
+import LeaguesList from '../components/home/LeaguesList'
 
 
 const HomeScreen = () => {
@@ -16,8 +17,9 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(true)
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [refreshing, setRefreshing] = useState(false); 
-  const {theme}  = useTheme()
+  
+  const [refreshing, setRefreshing] = useState(false);
+  const { theme } = useTheme()
 
   useEffect(() => {
 
@@ -56,7 +58,6 @@ const HomeScreen = () => {
 
     <View >
       {/* <Button buttonColor='navy' onPress={() => setModalVisible(!modalVisible)}>Open Modal</Button> */}
-
       <HomeButtons
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
@@ -70,18 +71,23 @@ const HomeScreen = () => {
           :
 
           <ScrollView
-            contentContainerStyle={tw`flex flex-col gap-4 mx-1`}
+            contentContainerStyle={tw`flex flex-col gap-4 mx-1 pt-3`}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#0000']} enabled />}
           >
 
+            {
+              leagues &&
+              <LeaguesList leagues={leagues}/>
+            }
 
+            <View style={tw`flex flex-col gap-4 mb-30`}>
 
-            <View style={tw`flex flex-col gap-4 mt-4 mb-15`}>
               {
                 leagues?.map((league, i) => (
-                  <LeagueCard key={i} league={league} />
-                ))
+                    <LeagueCard key={i} league={league} />
+                  ))
               }
+
             </View>
 
             <ModalComponent

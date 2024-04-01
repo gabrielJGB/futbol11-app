@@ -59,19 +59,20 @@ const ModalComponent = ({ modalVisible, setModalVisible, selectedDate, setSelect
             setLoading(true)
             setModalVisible(false)
           }}
-
-
+          
+          
           textStyle={tw`text-[${theme.colors.text}]`}
-          customDatesStyles={tw`text-[${theme.colors.text}]`}
+          // customDatesStyles={tw`text-[${theme.colors.text}]`}
           nextComponent={<ButtonComponent title=">" />}
           previousComponent={<ButtonComponent title="<" />}
-
           months={months}
           weekdays={weekDays}
-          selectedDayColor='aqua'
+          selectedDayColor={theme.colors.accent}
           selectedStartDate={selectedDate}
           initialDate={selectedDate}
           showDayStragglers
+          horizontal
+
         />
 
         {

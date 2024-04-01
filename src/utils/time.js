@@ -43,11 +43,11 @@ export const format_date = (date) => {
     yesterday.setDate(yesterday.getDate() - 1);
 
     if (is_same_day(date, today)) {
-        return "HOY";
+        return "Hoy";
     } else if (is_same_day(date, tomorrow)) {
-        return "MAÑANA";
+        return "Mañana";
     } else if (is_same_day(date, yesterday)) {
-        return "AYER";
+        return "Ayer";
     } else {
         const days = ['DOM', 'LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB'];
         const days_lower = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];

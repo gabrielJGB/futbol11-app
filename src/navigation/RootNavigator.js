@@ -8,6 +8,7 @@ import { StatusBar } from 'expo-status-bar';
 import DrawerContent from './DrawerContent';
 
 import HomeScreen from '../screens/HomeScreen';
+import GameScreen from '../screens/GameScreen';
 
 
 const RootNavigator = () => {
@@ -35,6 +36,8 @@ const RootNavigator = () => {
 
                     })}
                 />
+
+                <Stack.Screen name="Game" component={GameScreen} />
 
 
 

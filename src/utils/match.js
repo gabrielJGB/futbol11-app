@@ -83,7 +83,8 @@ export const get_status = (elem, date) => {
         case "STATUS_FIRST_HALF":
             return `${elem.detail} PT`
         case "STATUS_SECOND_HALF":
-            return `${elem.detail} ST`
+            return `${parseInt(elem.detail)-45}' ST`
+            // return `${elem.detail}`
 
         case "STATUS_OVERTIME":
         case "STATUS_HALFTIME_ET":

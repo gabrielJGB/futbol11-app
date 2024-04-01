@@ -1,0 +1,149 @@
+
+// import { View, Text, Image } from 'react-native'
+// import React, { useEffect, useRef } from 'react'
+// import {  convert_timestamp } from '../../../utils/time'
+// import tw from 'twrnc'
+
+
+// const  calendar = require('../../../../assets/calendar.png')
+// const  city = require('../../../../assets/city.png')
+// const  stadium = require ('../../../../assets/stadium.png')
+// const  referee = require('../../../../assets/referee.png')
+// const crowd = require('../../../../assets/crowd.png')
+
+
+// const InfoTab = ({ route }) => {
+
+//   const { game } = route.props
+
+//   const x = convert_timestamp(game.header.competitions[0].date)
+//   const date = `${x.dayOfWeek} ${x.day} de ${x.month} de ${x.year}, ${x.time}`
+//   const paragraph = useRef()
+
+//   useEffect(() => {
+
+//     if ("article" in game)
+//       paragraph.current.innerHTML = game.article.story.replaceAll("\n\n", "<br><br>")
+
+//   }, [])
+
+
+//   const Card = ({ title, value,icon }) => {
+//     return (
+//       <View style={tw`flex flex-row items-center gap-2 rounded-md px-2 ${THEMES.dark? "bg-zinc-900":"bg-gray-500"}`}>
+//         <Image source={icon} style={{width:30,height:30}} />
+//         <View style={tw`flex flex-col gap-2 p-2  `}>
+//           <Text style={tw`text-gray-400`}>{title}</Text>
+//           <Text style={tw`text-white`}>{value}</Text>
+//         </View>
+//       </View>
+//     )
+//   }
+
+//   return (
+//     <View style={tw`flex flex-col gap-2 px-2`}>
+
+//       <Text style={tw`text-lg font-semibold`}>INFORMACIÓN DEL PARTIDO</Text>
+
+
+//       {
+//         <Card title={"Fecha"} value={date} icon={calendar} />
+//       }
+
+//       {
+//         "venue" in game.gameInfo && "city" in game.gameInfo.venue.address &&
+
+//         <Card title="Ciudad" value={`${game.gameInfo.venue.address.city}${"country" in game.gameInfo.venue.address ? ", " + game.gameInfo.venue.address.country : ""}`} icon={city} />
+//       }
+//       {
+//         "venue" in game.gameInfo && game.gameInfo.venue &&
+
+//         <Card title={"Estadio"} value={game.gameInfo.venue.fullName} icon={stadium}/>
+
+//       }
+
+
+//       {
+//         "attendance" in game.gameInfo && game.gameInfo.attendance > 0 &&
+
+//         <Card title={"Espectadores"} value={game.gameInfo.attendance} icon={crowd}/>
+
+//       }
+
+//       {
+//         "officials" in game.gameInfo &&
+
+//         <Card title={"Arbitro"} value={game.gameInfo.officials[0].fullName} icon={referee}/>
+
+//       }
+
+//       {/* {
+//           "groups" in game.header.competitions[0].competitors[0] &&
+
+//           <li className='bg-zinc-900 text-sm w-full p-2 px-3 rounded-md border-[1px] border-zinc-600' >
+//             {game.header.competitions[0].competitors[0].groups.abbreviation}
+//           </li>
+
+//         }
+
+
+
+//         {
+//           "gameNote" in game.header &&
+
+//           <div className='bg-zinc-900 text-sm w-full p-2 px-3 rounded-md border-[1px] border-zinc-600' >
+//             {
+//               game.header.gameNote.split(" - ").map((note, i) => (
+//                 <li className='pb-1' key={i}>{note.replace("Juego", "Partido")}</li>
+//               ))
+
+//             }
+//           </div>
+//         }
+
+
+//         {
+//           !"gameNote" in game.header && "leg" in game.header.competitions[0] &&
+
+//           <li className='bg-zinc-900 text-sm w-full p-2 px-3 rounded-md border-[1px] border-zinc-600' >
+//             {`Partido de ${game.header.competitions[0].leg.displayValue}`}
+//           </li>
+
+//         }
+
+
+
+//         {
+//           "article" in match && "images" in game.article &&
+//           <div className='flex flex-col items-center gap-3 mt-2'>
+//             {
+//               game.article.images.map((image, i) => (
+
+//                 <img key={i} src={image.url} alt={image.alt} />
+//               ))
+//             }
+//           </div>
+
+//         }
+
+//         {
+//           "article" in match &&
+
+//           <div className='w-full py-2 text-2xl'>
+//             {game.article.headline}
+//           </div>
+
+//         }
+
+
+//         <p
+//           className='text-sm'
+//           ref={paragraph}></p> */}
+
+
+
+//     </View>
+//   )
+// }
+
+// export default InfoTab
