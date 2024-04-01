@@ -106,7 +106,7 @@ const HomeScreen = () => {
         icon="calendar"
         color='white'
         mode='elevated'
-        style={tw`absolute bottom-15 right-5 bg-red-600`}
+        style={tw`absolute bottom-15 right-5 bg-[${theme.colors.accent}]`}
         onPress={() => setModalVisible(!modalVisible)}
       />
 
