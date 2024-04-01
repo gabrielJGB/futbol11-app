@@ -45,7 +45,7 @@ const GameScreen = () => {
 
     //aca un gameState con el objeto game en lugar del props
 
-    // este comentario se ve solo en home-tabs pero no en main
+    
 
     <TabComponents  />
 
