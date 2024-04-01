@@ -16,7 +16,7 @@ const TabComponents = () => {
             <Tab.Navigator
                 screenOptions={{
                     tabBarIndicatorStyle: { backgroundColor: theme.colors.accent },
-                    tabBarLabelStyle: { textTransform: 'uppercase',fontSize:13 },
+                    tabBarLabelStyle: { textTransform: 'capitalize',fontSize:13 },
                     tabBarInactiveTintColor: "#DFDFDF",
                     swipeEnabled: true,
                     tabBarScrollEnabled: true,
