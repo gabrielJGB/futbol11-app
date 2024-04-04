@@ -10,6 +10,7 @@ import LoadingCard from '../components/home/LoadingCard'
 import HomeButtons from '../components/home/HomeButtons'
 import { useTheme } from '../context/ThemeContext'
 import LeaguesList from '../components/home/LeaguesList'
+import SwitchComponent from '../components/home/SwitchComponent'
 
 
 const HomeScreen = () => {
@@ -17,7 +18,7 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(true)
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedDate, setSelectedDate] = useState(new Date());
-  
+
   const [refreshing, setRefreshing] = useState(false);
   const { theme } = useTheme()
 
@@ -50,14 +51,16 @@ const HomeScreen = () => {
 
   };
 
+  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
 
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
 
 
   return (
 
     <View >
-      {/* <Button buttonColor='navy' onPress={() => setModalVisible(!modalVisible)}>Open Modal</Button> */}
+
       <HomeButtons
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
@@ -75,17 +78,21 @@ const HomeScreen = () => {
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#0000']} enabled />}
           >
 
-            {
+            {/* {
               leagues &&
               <LeaguesList leagues={leagues}/>
-            }
+            } */}
 
-            <View style={tw`flex flex-col gap-4 mb-30`}>
+            <SwitchComponent isSwitchOn={isSwitchOn} onToggleSwitch={onToggleSwitch} />
+
+
+
+            <View style={tw`flex flex-col  gap-3  mb-30`}>
 
               {
                 leagues?.map((league, i) => (
-                    <LeagueCard key={i} league={league} />
-                  ))
+                  <LeagueCard key={i} league={league} isSwitchOn={isSwitchOn}/>
+                ))
               }
 
             </View>
@@ -103,7 +110,7 @@ const HomeScreen = () => {
 
 
       <FAB
-        icon="calendar"
+        icon="calendar-month"
         color='white'
         mode='elevated'
         style={tw`absolute bottom-15 right-5 bg-[${theme.colors.accent}]`}

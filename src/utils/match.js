@@ -1,5 +1,5 @@
 import { convert_timestamp } from "./time"
-import { logo_404 } from '../../assets/index'
+import { logo_404,penalty,red_card,ball } from '../../assets/index'
 import { Image } from "react-native"
 
 export const get_flag = (item,SIZE) => {
@@ -113,7 +113,7 @@ export const get_status = (elem, date) => {
             return "Finalizado";
 
         case "STATUS_FINAL_PEN":
-            return "Finalizado (Penales)";
+            return "Finalizado (Pen.)";
 
         case "STATUS_FINAL_AET":
             return "Finalizado (T. Extra)";
@@ -121,4 +121,17 @@ export const get_status = (elem, date) => {
         default:
             return "";
     }
+}
+
+
+export const get_detail_icon = (detail) => {
+    const SIZE_2 = 10
+    const SIZE_3 = 13
+
+    if (detail.penaltyKick)
+        return <Image source={penalty} style={{width:SIZE_3,height:SIZE_3}} />
+    else if (detail.redCard)
+        return <Image  source={red_card} style={{width:SIZE_2,height:SIZE_2}} />
+    else if (detail.scoringPlay)
+        return <Image  source={ball} style={{width:SIZE_2,height:SIZE_2}} />
 }
