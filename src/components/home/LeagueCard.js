@@ -4,11 +4,13 @@ import tw from 'twrnc'
 import GameCard from './GameCard'
 import { useTheme } from '../../context/ThemeContext'
 import { get_flag } from '../../utils/match'
-import { Button, Divider } from 'react-native-paper'
+import { Button, Divider, Icon } from 'react-native-paper'
+import { useNavigation } from '@react-navigation/native'
 
 const LeagueCard = ({ league, isSwitchOn }) => {
 
     const { theme } = useTheme()
+    const navigation = useNavigation()
     const [isLeagueVisible, setIsLeagueVisible] = useState(isSwitchOn)
 
 
@@ -22,30 +24,22 @@ const LeagueCard = ({ league, isSwitchOn }) => {
     return (
         <View style={tw`bg-[${theme.colors.card}] flex flex-col shadow-md`}>
 
-            <View style={tw`flex flex-row w-full `}>
-                <TouchableNativeFeedback
-                    style={tw`flex flex-row self-stretch w-full`}
-                    onPress={() => { }}
-                >
-                    <View 
-                        style={tw`flex flex-row items-center gap-2 pl-2 w-[80%]`}>
+
+            <TouchableNativeFeedback
+                onPress={() => setIsLeagueVisible(!isLeagueVisible)}
+            >
+                <View
+                    style={tw`flex flex-row justify-between items-center px-2 py-3`}>
+                    <View style={tw`flex flex-row items-center gap-2 `}>
                         {get_flag(league, 30)}
                         <Text style={tw`text-[${theme.colors.text}] font-semibold`}>{league.name.replace("Argentine", "").toUpperCase()}</Text>
                     </View>
+                    <Icon source={`chevron-${isLeagueVisible ? "up" : "down"}`} size={20} color={theme.colors.text} />
+                </View>
 
-                </TouchableNativeFeedback>
+            </TouchableNativeFeedback>
 
-                <Button
-                    buttonColor={theme.colors.card}
-                    textColor={theme.colors.text}
-                    style={tw`rounded-0 w-[20%]`}
-                    rippleColor={theme.colors.card100}
-                    contentStyle={{ flexDirection: 'row-reverse', paddingVertical: 5 }}
-                    onPress={() => { setIsLeagueVisible(!isLeagueVisible) }}
-                    icon={`chevron-${isLeagueVisible ? "up" : "down"}`}
-                ></Button>
 
-            </View>
 
 
             <View style={tw`${isLeagueVisible ? "" : "hidden"}`}>
@@ -58,7 +52,24 @@ const LeagueCard = ({ league, isSwitchOn }) => {
                     ))
                 }
 
+                <View style={tw`py-3 mx-auto`}>
+
+                    <Button
+                        buttonColor="transparent"
+                        textColor={theme.colors.text}
+                        style={tw`w-[50%]`}
+                        mode='outlined'
+                        onPress={() => navigation.navigate("League",{ id: league.slug})}
+                        
+                    >Ver Competición</Button>
+
+                </View>
+
+
+
             </View>
+
+
 
         </View>
     )

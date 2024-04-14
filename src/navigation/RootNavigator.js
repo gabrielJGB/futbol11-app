@@ -9,6 +9,9 @@ import DrawerContent from './DrawerContent';
 
 import HomeScreen from '../screens/HomeScreen';
 import GameScreen from '../screens/GameScreen';
+import LeagueScreen from '../screens/LeagueScreen';
+import PlayerScreen from '../screens/PlayerScreen';
+import TeamScreen from '../screens/TeamScreen';
 
 
 const RootNavigator = () => {
@@ -21,24 +24,56 @@ const RootNavigator = () => {
     const MainStack = () => {
 
         return (
-            <Stack.Navigator>
+            <Stack.Navigator >
                 <Stack.Screen
                     name="Home"
-                    
                     component={HomeScreen}
                     options={({ navigation }) => ({
                         headerShadowVisible: false,
                         headerTitleAlign: "center",
-                        title: 'Inicio',
+                        title: 'Fútbol 11',
                         headerLeft: () => (
                             <DrawerToggleButton tintColor={theme.colors.text} />
                         ),
-
+                        
                     })}
                 />
 
-                <Stack.Screen name="Game" component={GameScreen} />
+                <Stack.Screen
+                    name="Game"
+                    component={GameScreen}
+                    options={{
+                        headerShadowVisible: false,
+                    }}
 
+                />
+
+                <Stack.Screen
+                    name="League"
+                    component={LeagueScreen}
+                    options={{
+                        headerShadowVisible: false,
+                    }}
+
+                />
+
+                <Stack.Screen
+                    name="Player"
+                    component={PlayerScreen}
+                    options={{
+                        headerShadowVisible: false,
+                    }}
+
+                />
+
+                <Stack.Screen
+                    name="Team"
+                    component={TeamScreen}
+                    options={{
+                        headerShadowVisible: false,
+                    }}
+
+                />
 
 
             </Stack.Navigator>
@@ -54,6 +89,7 @@ const RootNavigator = () => {
                 drawerContent={props => <DrawerContent {...props} />}
                 initialRouteName='MainStack'
                 screenOptions={{ headerShown: false, drawerType: "slide" }}
+                backBehavior='history'
 
             >
                 <Drawer.Screen name="MainStack" component={MainStack} />

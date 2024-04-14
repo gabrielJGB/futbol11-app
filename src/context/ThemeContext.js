@@ -18,16 +18,17 @@ export const ThemeProvider = ({ children }) => {
         colors: {
             ...DarkTheme.colors,
             text: '#ffffff',
-            background: '#000000',
+            background: '#161A22',
             primary: '#ffffff',
             card: '#232B36',
             card100:"#313D58",
-            card200:"#121B2D",
+            card200:"#161A22",
             border: '#454545',
             border100: '#C2C2C2',
             notification: 'rgb(255, 69, 58)',
             secondary: '#215e40',
             accent: '#1DBB32',
+            accent100: '#34EF71',
             textLive: '#FF3434',
             text100:"#C3C3C3",
             text200: '#A0A0A0'
@@ -51,6 +52,7 @@ export const ThemeProvider = ({ children }) => {
             text100:"#161616",
             text200: '#1F1F1F',
             accent: '#1DBB32',
+            accent100: '#1DBB32',
 
         },
 

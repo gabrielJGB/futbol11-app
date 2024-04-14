@@ -1,11 +1,15 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 
+import LeagueContainer from '../components/league/LeagueContainer'
+import { LeagueProvider } from '../context/LeagueContext'
+
 const LeagueScreen = () => {
+
+
   return (
-    <View>
-      <Text>LeagueScreen</Text>
-    </View>
+    <LeagueProvider>
+      <LeagueContainer />
+    </LeagueProvider>
   )
 }
 

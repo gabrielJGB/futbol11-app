@@ -9,7 +9,6 @@ import { FAB } from 'react-native-paper'
 import LoadingCard from '../components/home/LoadingCard'
 import HomeButtons from '../components/home/HomeButtons'
 import { useTheme } from '../context/ThemeContext'
-import LeaguesList from '../components/home/LeaguesList'
 import SwitchComponent from '../components/home/SwitchComponent'
 
 
@@ -25,15 +24,19 @@ const HomeScreen = () => {
   useEffect(() => {
 
     _fetchAllLeagues()
-
     const intervalId = setInterval(() => {
       _fetchAllLeagues()
-    }, 1000 * 120)
+    }, 1000 * 30)
 
     return () => clearInterval(intervalId)
 
   }, [selectedDate])
 
+  useEffect(() => {
+    _fetchAllLeagues()
+    _fetchAllLeagues()
+  }, [])
+  
 
   const _fetchAllLeagues = () => {
 
@@ -51,7 +54,7 @@ const HomeScreen = () => {
 
   };
 
-  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+  const [isSwitchOn, setIsSwitchOn] = React.useState(true);
 
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 

@@ -1,44 +1,46 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableNativeFeedback } from 'react-native'
+import React, { useState } from 'react'
 import tw from 'twrnc'
 import { useTheme } from '../../context/ThemeContext'
 import { get_detail_icon } from '../../utils/match'
+import { Button } from 'react-native-paper'
 
-const GameScorers = ({ details, homeId, awayId }) => {
+const GameScorers = ({ details, homeId, awayId, video }) => {
 
     const { theme } = useTheme()
+    const [scorersVisible, setScorersVisible] = useState(!video)
+    const bgColor = theme.colors.card200
 
     return (
-        <View style={tw`flex flex-col w-full pt-1 gap-1 mx-auto`}>
 
-
-
+        <View style={tw`flex gap-1 mt-2`}>
 
             {
                 details.map((detail, i) => (
-                    <View key={i} style={tw`flex flex-row justify-center items-center`}>
+                    <View key={i} style={tw`${scorersVisible ? "flex" : "hidden"} ${detail.team.id === homeId ? "flex-row" : "flex-row-reverse"} `}>
 
-                        {
-                            detail.team.id === homeId ?
 
-                                <View style={tw`flex h-full w-1/2 flex-row justify-center items-center  bg-[${theme.colors.card200}]`} >
-                                    {get_detail_icon(detail)}
-                                    <Text style={tw`text-[${theme.colors.text100}] text-center text-xs`}> {"participants" in detail ? detail.participants[0].athlete.displayName : "Expulsión"}{detail.ownGoal && " (EC)"}</Text>
-                                </View>
-                                :
-                                <View style={tw`w-1/2`}></View>
-                        }
+                        <View style={tw`w-[42%]  flex flex-row gap-1 justify-center items-center px-2 py-[1px] bg-[${bgColor}]`} >
 
-                        <Text style={tw`min-w-[50px] bg-[${theme.colors.card200}] text-[${theme.colors.text}] text-center font-semibold `}>{detail.clock.displayValue}</Text>
 
-                        {
-                            detail.team.id === awayId ?
-                                <View style={tw`flex h-full w-1/2 flex-row justify-center items-center  bg-[${theme.colors.card200}]`} >{get_detail_icon(detail)}
-                                    <Text style={tw`text-[${theme.colors.text100}] text-center text-xs`}> {"participants" in detail ? detail.participants[0].athlete.displayName : "Expulsión"}{detail.ownGoal && " (EC)"}</Text>
-                                </View>
-                                :
-                                <View style={tw`w-1/2`}></View>
-                        }
+                            {get_detail_icon(detail)}
+
+                            <Text style={tw`text-[${theme.colors.text100}] text-center text-xs `}
+                            >
+                                {"participants" in detail ?
+                                    detail.participants[0].athlete.displayName :
+                                    "Expulsión (banco)"} {detail.ownGoal && " (EC)"}
+                            </Text>
+
+
+                        </View>
+
+
+                        <Text
+                            style={tw`w-[16%] h-full rounded-${detail.team.id === homeId ? "r" : "l"}-[6px] bg-[${bgColor}] text-xs text-[${theme.colors.text}] text-center font-semibold align-middle`}
+                        >
+                            {detail.clock.displayValue}
+                        </Text>
 
 
 
@@ -46,7 +48,15 @@ const GameScorers = ({ details, homeId, awayId }) => {
                 ))
             }
 
+            {
+                details.length > 0 &&
+
+                <Button onPress={() => setScorersVisible(!scorersVisible)} icon={`chevron-${scorersVisible ? "up" : "down"}`} textColor={theme.colors.text} style={tw`w-[103%] mx-auto  rounded-0`} rippleColor="black"></Button>
+            }
+
+
         </View>
+
     )
 }
 

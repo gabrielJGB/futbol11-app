@@ -25,7 +25,7 @@ const Team = ({ team }) => {
             </View>
 
             <View style={tw.style(`flex flex-row items-end gap-[2px] `)}>
-                <Text style={tw.style(`text-[${theme.colors.text}]`, ` text-lg font-semibold`)}>{team.score}</Text>
+                <Text style={tw.style(`text-[${theme.colors.text}]`, ` text-lg `)}>{team.score}</Text>
                 {
                     "shootoutScore" in team &&
                     <Text style={tw.style(`text-[${theme.colors.text100}] text-xs `)}>{team.shootoutScore}</Text>

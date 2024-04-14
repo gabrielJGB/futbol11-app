@@ -12,10 +12,10 @@ const SwitchComponent = ({ isSwitchOn, onToggleSwitch }) => {
             onPress={onToggleSwitch}
         >
             <View
-                style={tw`flex flex-row py-0 px-2 items-center justify-between bg-[${theme.colors.card}]`}
+                style={tw`flex flex-row py-2 px-2 items-center justify-between bg-[${theme.colors.card}]`}
             >
                 <Text style={tw`text-[${theme.colors.text}]`}>
-                    {isSwitchOn ? "Contraer" : "Expandir"} todas las competiciones
+                   Contraer todas las competiciones
                 </Text>
 
                 <Switch
