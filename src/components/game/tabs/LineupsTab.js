@@ -144,7 +144,7 @@ const Player = ({ player }) => {
         <View style={tw`flex flex-row justify-between items-center px-2 py-4`}>
           <View style={tw`flex flex-row flex-wrap w-[95%] items-center gap-1`}>
 
-            <Text style={tw`text-[${theme.colors.text}] bg-gray-900 rounded-lg py-[2px] font-semibold w-[30px] text-center text-[15px]`}>{player.jersey}</Text>
+            <Text style={tw`text-white bg-gray-900 rounded-lg py-[2px] font-semibold w-[30px] text-center text-[15px]`}>{player.jersey}</Text>
             <Text style={tw`text-[${get_player_color(player.position)}] font-semibold text-center w-[30px]`}>{player.position?.abbreviation}</Text>
             <Text style={tw`text-[${theme.colors.text}]`}>{player.athlete.fullName}</Text>
             {
@@ -174,7 +174,7 @@ const Player = ({ player }) => {
             <View style={tw`flex flex-row gap-1 items-center mb-2`}>
 
               <Image source={arrow_in} style={{ width: IMG_SIZE, height: IMG_SIZE }} />
-              <Text style={tw`text-[${theme.colors.text}] bg-gray-900 rounded-md py-[2px] font-semibold w-[25px] text-center text-xs`}>{player.subbedOutFor.jersey}</Text>
+              <Text style={tw`text-white bg-gray-900 rounded-md py-[2px] font-semibold w-[25px] text-center text-xs`}>{player.subbedOutFor.jersey}</Text>
               <Text style={tw`text-[${theme.colors.text}] text-xs`}>{player.subbedOutFor.athlete.displayName}</Text>
             </View>
           }
@@ -184,7 +184,7 @@ const Player = ({ player }) => {
             <View style={tw`flex flex-row gap-1 items-center mb-2`}>
 
               <Image source={arrow_out} style={{ width: IMG_SIZE, height: IMG_SIZE }} />
-              <Text style={tw`text-[${theme.colors.text}] bg-gray-900 rounded-md py-[2px] font-semibold w-[25px] text-center text-xs`}>{player.subbedInFor.jersey}</Text>
+              <Text style={tw`text-white bg-gray-900 rounded-md py-[2px] font-semibold w-[25px] text-center text-xs`}>{player.subbedInFor.jersey}</Text>
               <Text style={tw`text-[${theme.colors.text}] text-xs`}>{player.subbedInFor.athlete.displayName}</Text>
             </View>
           }

@@ -28,7 +28,8 @@ export const convert_timestamp = (timestamp) => {
         year: fechaUTC.getUTCFullYear(),
         day: fechaUTC.getUTCDate(),
         dateBefore,
-        DDMMYYYY: `${fechaUTC.getUTCDate().toString().padStart(2, '0')}/${(fechaUTC.getUTCMonth()+1).toString().padStart(2, '0')}`
+        DDMMYYYY: `${fechaUTC.getUTCDate().toString().padStart(2, '0')}/${(fechaUTC.getUTCMonth()+1).toString().padStart(2, '0')}`,
+        dateObject :fechaUTC
         
     };
 }
@@ -55,6 +56,29 @@ export const format_date = (date) => {
         const formatedDate = `${dayOfWeek} ${format_number(date.getDate())}/${format_number(date.getMonth() + 1)}/${format_number(date.getFullYear() % 100)}`;
         return formatedDate;
     }
+}
+
+export const check_date = (date)=>{
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+
+    if (is_same_day(date, today)) {
+        return "Hoy";
+    } else if (is_same_day(date, tomorrow)) {
+        return "Mañana";
+    } else if (is_same_day(date, yesterday)) {
+        return "Ayer"
+    }
+    else{
+        return false
+    }
+    
+
+
 }
 
 const format_number = (number) => {

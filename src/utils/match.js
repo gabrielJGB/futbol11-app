@@ -43,12 +43,15 @@ export const get_logo = (team_p, SIZE) => {
         }
 
         if (typeof (team) === "object" && "logos" in team && team.logos.length > 0) {
-            logo = team.logos[0].href
+
+            logo = team.logos.length>1? team.logos[1].href:team.logos[0].href
             logo = logo.replace("https://a.espncdn.com/i", `https://a1.espncdn.com/combiner/i?img=/i`)
             logo += `&h=${SIZE + p}&w=${SIZE + p}`
             return <Image source={{ uri: logo }} width={SIZE} height={SIZE} />
 
         }
+
+        
 
         return <Image source={logo_404} style={{ width: SIZE, height: SIZE }} />
     }
@@ -74,7 +77,7 @@ export const translate_title = (title) => {
     title = title.replace("Fifth Round", "Quinta Ronda")
     title = title.replace("Club Friendly", "")
     title = title.replace("Finals", "Final")
-    return title.toUpperCase()
+    return title
 
 }
 
@@ -89,11 +92,13 @@ export const get_status = (elem, date) => {
             return convert_timestamp(date).time;
 
         case "STATUS_FIRST_HALF":
-            return `${elem.detail}`
+            // return `${elem.detail}`
+            return `${elem.detail} PT`
+
         case "STATUS_SECOND_HALF":
-            return `${elem.detail}`
-        // return `${parseInt(elem.detail)-45}' ST`
-        // return `${elem.detail}`
+            // return `${elem.detail}`
+            return `${parseInt(elem.detail)-45}' ST`
+
 
         case "STATUS_OVERTIME":
             return "E.T. Extra"
@@ -119,6 +124,7 @@ export const get_status = (elem, date) => {
         case "STATUS_END_OF_EXTRATIME":
             return "Penales";
 
+        case "STATUS_FINAL_AGT":
         case "STATUS_FULL_TIME":
             return "Finalizado";
 

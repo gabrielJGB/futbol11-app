@@ -22,7 +22,7 @@ export const ThemeProvider = ({ children }) => {
             primary: '#ffffff',
             card: '#232B36',
             card100:"#313D58",
-            card200:"#161A22",
+            card200:"#1D242B",
             border: '#454545',
             border100: '#C2C2C2',
             notification: 'rgb(255, 69, 58)',

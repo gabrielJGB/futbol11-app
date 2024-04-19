@@ -47,7 +47,16 @@ const LeagueCard = ({ league, isSwitchOn }) => {
                     league.events.map((game, i) => (
                         <View key={i}>
                             <Divider style={tw`bg-[${theme.colors.border}] h-[1px] w-[97%] mx-auto`} />
-                            <GameCard game={game} isTournament={league.isTournament} />
+                            <GameCard
+                                id={game.id}
+                                home={game.competitors.find(team => team.homeAway === "home")}
+                                away={game.competitors.find(team => team.homeAway === "away")}
+                                status={game.fullStatus}
+                                tournament={league.isTournament && game.group.shortName}
+                                date={game.date}
+                                video={"video" in game}
+                                dateString={false}
+                            />
                         </View>
                     ))
                 }
@@ -59,8 +68,8 @@ const LeagueCard = ({ league, isSwitchOn }) => {
                         textColor={theme.colors.text}
                         style={tw`w-[50%]`}
                         mode='outlined'
-                        onPress={() => navigation.navigate("League",{ id: league.slug})}
-                        
+                        onPress={() => navigation.navigate("League", { id: league.slug })}
+
                     >Ver Competición</Button>
 
                 </View>

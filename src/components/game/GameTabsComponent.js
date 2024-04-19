@@ -19,7 +19,7 @@ const GameTabsComponent = ({ tabs, video }) => {
         tabBarLabelStyle: { textTransform: 'uppercase', fontSize: 12, fontWeight: 500, minWidth: 70 },
         swipeEnabled: true,
         tabBarScrollEnabled: true,
-        animationEnabled: false,
+        animationEnabled: true,
         tabBarItemStyle: { width: "auto" },
         tabBarGap: 5,
         tabBarStyle: { backgroundColor: theme.colors.card, elevation: 15, borderBottomWidth: 1, borderBottomColor: theme.colors.background },

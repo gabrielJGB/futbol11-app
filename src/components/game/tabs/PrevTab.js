@@ -38,7 +38,7 @@ const PrevTab = ({ navigation }) => {
             <Text style={tw`text-[${theme.colors.text}] bg-[${theme.colors.card}] w-full text-center py-2 text-lg font-semibold`}>GOLEADORES</Text>
             <Divider style={tw`bg-[${theme.colors.border}] h-[1px] w-[100%] mx-auto`} />
 
-            <View style={tw`flex flex-row py-3 gap-1  bg-[${theme.colors.card}]`}>
+            <View style={tw`flex flex-row items-start py-3 gap-1  bg-[${theme.colors.card}]`}>
               {
                  
                 game.data.leaders?.map((elem, i) => (

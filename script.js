@@ -1,4 +1,30 @@
-import { convert_timestamp } from '../utils/time'
+const fs = require("fs");
+
+const convert_timestamp = (timestamp) => {
+    const fechaUTC = new Date(timestamp);
+    fechaUTC.setUTCHours(fechaUTC.getUTCHours() - 3);
+    const hora = fechaUTC.getUTCHours().toString().padStart(2, '0') + ':' + fechaUTC.getUTCMinutes().toString().padStart(2, '0');
+    const fecha = fechaUTC.getUTCFullYear().toString() + (fechaUTC.getUTCMonth() + 1).toString().padStart(2, '0') + fechaUTC.getUTCDate().toString().padStart(2, '0');
+    const diaSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'][fechaUTC.getUTCDay()];
+    const mes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'][fechaUTC.getUTCMonth()];
+
+    const date_2 = new Date(fechaUTC.getTime() - 86400000)
+    const dateBefore = date_2.getUTCFullYear().toString() + (date_2.getUTCMonth() + 1).toString().padStart(2, '0') + date_2.getUTCDate().toString().padStart(2, '0');
+
+
+    return {
+        time: hora,
+        date: fecha,
+        dayOfWeek: diaSemana,
+        month: mes,
+        year: fechaUTC.getUTCFullYear(),
+        day: fechaUTC.getUTCDate(),
+        dateBefore,
+        DDMMYYYY: `${fechaUTC.getUTCDate().toString().padStart(2, '0')}/${(fechaUTC.getUTCMonth() + 1).toString().padStart(2, '0')}`,
+        dateObject: fechaUTC
+
+    };
+}
 
 const divide_array = (array, numeroSubarrays) => {
     const tamanoSubarray = Math.ceil(array.length / numeroSubarrays);
@@ -12,7 +38,6 @@ const divide_array = (array, numeroSubarrays) => {
     return subarrays;
 }
 
-
 const fetch_URL = async (URL) => {
     const time = new Date().getTime()
     const res = await fetch(`${URL}&_=${time}`)
@@ -21,61 +46,13 @@ const fetch_URL = async (URL) => {
 
 }
 
-
-export const fetchAllLeagues = async (date) => {
-
-    try {
-        const num = new Date().getTime()
-        const url = `https://site.web.api.espn.com/apis/v2/scoreboard/header?sport=soccer&lang=es&region=ar&dates=${date}&_=${num}`
-        const res = await fetch(url, { cache: "no-store" })
-        const data = await res.json()
-        return data.sports[0].leagues
-
-    } catch (error) {
-        console.error(error)
-    }
-
-}
-
-
-export const fetchGame = async (id) => {
-    const num = new Date().getTime()
-    const url = `https://site.web.api.espn.com/apis/site/v2/sports/soccer/all/summary?region=ar&lang=es&contentorigin=deportes&event=${id}&_=${num}`
-    const res = await fetch(url, { cache: "no-store" })
-    const data = await res.json()
-
-    const tabs = [{ penales: false, name: "Penales" }, { formaciones: false, name: "Formaciones" }, { relato: false, name: "Relato" }, { estadisticas: false, name: "Estadísticas" }, { posiciones: false, name: "Posiciones" }, { videos: false, name: "Videos" }]
-
-    if ("shootout" in data)
-        tabs.penales = true
-
-    if ("roster" in data.rosters[0])
-        tabs.formaciones = true
-
-    if ("commentary" in data || "keyEvents" in data)
-        tabs.relato = true
-
-    if ("statistics" in data.boxscore.teams[0] && data.boxscore.teams[0].statistics.length > 0)
-        tabs.estadisticas = true
-
-    if (data.standings.groups.length && data.standings.groups[0].standings.entries.length)
-        tabs.posiciones = true
-
-    if ("videos" in data && data.videos.length)
-        tabs.videos = true
-
-    return { data, tabs }
-}
-
-
-
-export const fetchLeague = async (slug) => {
+const fetchLeague = async (slug) => {
     const leagueInfoResp = await fetch_URL(`https://sports.core.api.espn.com/v2/sports/soccer/leagues/${slug}?lang=es&region=ar`)
 
     const leagueInfo = {
         oneStage: leagueInfoResp.season.types.count === 1,
         stages: leagueInfoResp.season.types.items,
-        currentStage: leagueInfoResp.season.type,
+        curentStage: leagueInfoResp.season.type,
         name: leagueInfoResp.name,
         shortName: leagueInfoResp.shortName,
         isTournament: leagueInfoResp.isTournament,
@@ -96,6 +73,7 @@ export const fetchLeague = async (slug) => {
 
     const teamsResp = await fetch_URL(`https://site.api.espn.com/apis/site/v2/sports/soccer/${slug}/teams?lang=es&region=ar`)
     const teams = teamsResp.sports[0].leagues[0].teams
+
 
     leagueInfo.stages = await leagueInfo.stages.map(stage => {
         return { ...stage, "stageEvents": allEvents.filter(event => event.season.slug === stage.slug) }
@@ -128,3 +106,19 @@ export const fetchLeague = async (slug) => {
     return { ...leagueInfo, standings, teams }
 
 }
+
+
+let slug = "uefa.champions"
+
+fetchLeague(slug)
+    .then(resp => {
+
+
+        fs.writeFile("resp.json", JSON.stringify(resp),
+            err => {
+                if (err) throw err;
+                console.log("JSON Saved");
+            })
+
+
+    })

@@ -5,11 +5,15 @@ import { useTheme } from '../../context/ThemeContext';
 import HomeLeagueTab from './tab/HomeLeagueTab';
 import CalendarLeagueTab from './tab/CalendarLeagueTab';
 import TeamsLeagueTab from './tab/TeamsLeagueTab';
+import PositionsLeagueTab from './tab/PositionsLeagueTab';
+import { useLeague } from '../../context/LeagueContext';
 
 
 const LeagueTabsComponent = ({ tabs, video }) => {
     const Tab = createMaterialTopTabNavigator();
     const { theme } = useTheme()
+    const { league } = useLeague()
+
 
 
     return (
@@ -47,12 +51,26 @@ const LeagueTabsComponent = ({ tabs, video }) => {
 
             />
 
-            <Tab.Screen
-                name="TeamsLeague"
-                component={TeamsLeagueTab}
-                options={{ title: "Equipos", lazy: true, lazyPlaceholder: () => (<ActivityIndicator color='white' style={{ marginTop: 20 }} />) }}
 
-            />
+            {
+                league.standings &&
+                <Tab.Screen
+                    name="PositionsLeague"
+                    component={PositionsLeagueTab}
+                    options={{ title: "Posiciones", lazy: true, lazyPlaceholder: () => (<ActivityIndicator color='white' style={{ marginTop: 20 }} />) }}
+
+                />
+            }
+
+            {
+                league.teams &&
+                <Tab.Screen
+                    name="TeamsLeague"
+                    component={TeamsLeagueTab}
+                    options={{ title: "Equipos", lazy: true, lazyPlaceholder: () => (<ActivityIndicator color='white' style={{ marginTop: 20 }} />) }}
+
+                />
+            }
 
 
 
