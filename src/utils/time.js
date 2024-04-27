@@ -19,6 +19,8 @@ export const convert_timestamp = (timestamp) => {
      const date_2 = new Date(fechaUTC.getTime() - 86400000)
      const dateBefore = date_2.getUTCFullYear().toString() + (date_2.getUTCMonth() + 1).toString().padStart(2, '0') + date_2.getUTCDate().toString().padStart(2, '0');
 
+     const dateNext = new Date(fechaUTC.getTime() + 86400000)
+     
 
     return {
         time: hora,
@@ -28,6 +30,7 @@ export const convert_timestamp = (timestamp) => {
         year: fechaUTC.getUTCFullYear(),
         day: fechaUTC.getUTCDate(),
         dateBefore,
+        dateNext,
         DDMMYYYY: `${fechaUTC.getUTCDate().toString().padStart(2, '0')}/${(fechaUTC.getUTCMonth()+1).toString().padStart(2, '0')}`,
         dateObject :fechaUTC
         

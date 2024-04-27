@@ -3,11 +3,11 @@ import { View, Text, TouchableNativeFeedback } from 'react-native'
 import tw from 'twrnc'
 import GameCard from './GameCard'
 import { useTheme } from '../../context/ThemeContext'
-import { get_flag } from '../../utils/match'
+import { get_flag, live_match } from '../../utils/match'
 import { Button, Divider, Icon } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
-const LeagueCard = ({ league, isSwitchOn }) => {
+const LeagueCard = ({ league, isSwitchOn, showOnlyLive }) => {
 
     const { theme } = useTheme()
     const navigation = useNavigation()
@@ -16,13 +16,14 @@ const LeagueCard = ({ league, isSwitchOn }) => {
 
     useEffect(() => {
 
-        setIsLeagueVisible(isSwitchOn ? true : false)
+        setIsLeagueVisible(isSwitchOn ? false : true)
 
     }, [isSwitchOn])
 
 
+
     return (
-        <View style={tw`bg-[${theme.colors.card}] flex flex-col shadow-md`}>
+        <View style={tw`bg-[${theme.colors.card}] ${ showOnlyLive && !live_match(league) ? "hidden" : "flex"}  flex-col shadow-md`}>
 
 
             <TouchableNativeFeedback
@@ -56,22 +57,29 @@ const LeagueCard = ({ league, isSwitchOn }) => {
                                 date={game.date}
                                 video={"video" in game}
                                 dateString={false}
+                                showOnlyLive={showOnlyLive}
                             />
                         </View>
                     ))
                 }
 
-                <View style={tw`py-3 mx-auto`}>
+                <View style={tw`flex flex-col gap-3 w-full px-1 pb-3 `}>
 
-                    <Button
-                        buttonColor="transparent"
-                        textColor={theme.colors.text}
-                        style={tw`w-[50%]`}
-                        mode='outlined'
-                        onPress={() => navigation.navigate("League", { id: league.slug })}
+                    <Divider style={tw`bg-[${theme.colors.border}] h-[1px] w-[97%] mx-auto`} />
 
-                    >Ver Competición</Button>
+                    <View style={tw`flex flex-row items-center justify-center`}>
+                        <Button
+                            buttonColor="transparent"
+                            style={tw`border-0`}
+                            onPress={() => navigation.navigate("League", { id: league.slug })}
 
+                        >
+                            <View style={tw`flex flex-row items-center gap-2`}>
+                                <Text style={tw`text-[${theme.colors.text}]`}> Calendario completo</Text>
+                                <Icon source="chevron-right" size={19} color={theme.colors.text100} />
+                            </View>
+                        </Button>
+                    </View>
                 </View>
 
 

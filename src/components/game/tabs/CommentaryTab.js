@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, ScrollView, TouchableNativeFeedback, Image } from 'react-native'
 import { useTheme } from '../../../context/ThemeContext'
 import { useGame } from '../../../context/GameContext'
@@ -107,6 +107,21 @@ const translate_text = (text) => {
 
 }
 
+
+const delete_repeated = (array) => {
+  const idsVistos = new Set();
+  const resultado = [];
+
+  for (let i = 0; i < array.length; i++) {
+    if("play" in array[i] && array[i].play.type.id === "66"){
+        array.splice(i+1,1)
+    }
+
+  }
+
+  return resultado;
+}
+
 const CardEvent = ({ text, clock, participants, typeId, typeText, team }) => {
   const { theme } = useTheme()
   const SIZE = 14
@@ -160,9 +175,19 @@ const CommentaryTab = () => {
 
   const { theme } = useTheme()
   const { game } = useGame()
-  const events = "commentary" in game.data ? game.data.commentary : false
-  const keyEvents = "keyEvents" in game.data ? game.data.keyEvents : false
+  let events = "commentary" in game.data ? game.data.commentary : false
+  let keyEvents = "keyEvents" in game.data ? game.data.keyEvents : false
   const [showKeyEvents, setShowKeyEvents] = useState(!events)
+
+
+  useEffect(() => {
+
+    if (events) {
+      events = delete_repeated(events)
+    }
+
+  }, [game])
+
 
 
   const get_team = (displayName) => {

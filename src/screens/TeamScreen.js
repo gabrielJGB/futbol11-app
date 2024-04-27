@@ -1,11 +1,17 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+import { TeamProvider } from '../context/TeamContext'
+import TeamContainer from '../components/team/TeamContainer'
+import { SafeAreaView } from 'react-native'
 
 const TeamScreen = () => {
+
+
   return (
-    <View>
-      <Text>TeamScreen</Text>
-    </View>
+    
+      <TeamProvider>
+        <TeamContainer />
+      </TeamProvider>
+    
   )
 }
 

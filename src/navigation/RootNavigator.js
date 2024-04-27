@@ -12,6 +12,8 @@ import GameScreen from '../screens/GameScreen';
 import LeagueScreen from '../screens/LeagueScreen';
 import PlayerScreen from '../screens/PlayerScreen';
 import TeamScreen from '../screens/TeamScreen';
+import { Text } from 'react-native';
+import ArticleScreen from '../screens/ArticleScreen';
 
 
 const RootNavigator = () => {
@@ -24,7 +26,10 @@ const RootNavigator = () => {
     const MainStack = () => {
 
         return (
-            <Stack.Navigator >
+            <Stack.Navigator
+
+
+            >
                 <Stack.Screen
                     name="Home"
                     component={HomeScreen}
@@ -35,7 +40,7 @@ const RootNavigator = () => {
                         headerLeft: () => (
                             <DrawerToggleButton tintColor={theme.colors.text} />
                         ),
-                        
+
                     })}
                 />
 
@@ -69,9 +74,15 @@ const RootNavigator = () => {
                 <Stack.Screen
                     name="Team"
                     component={TeamScreen}
-                    options={{
-                        headerShadowVisible: false,
-                    }}
+                    options={{ title: "" }}
+
+                />
+
+
+                <Stack.Screen
+                    name="Article"
+                    component={ArticleScreen}
+                    options={{ title: "" }}
 
                 />
 

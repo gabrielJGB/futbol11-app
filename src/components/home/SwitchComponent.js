@@ -4,22 +4,23 @@ import { Switch } from 'react-native-paper';
 import { useTheme } from '../../context/ThemeContext';
 import tw from 'twrnc'
 
-const SwitchComponent = ({ isSwitchOn, onToggleSwitch }) => {
+const SwitchComponent = ({ isSwitchOn, onToggleSwitch, text }) => {
     const { theme } = useTheme()
 
     return (
         <TouchableNativeFeedback
             onPress={onToggleSwitch}
+            style={tw`py-2`}
         >
             <View
-                style={tw`flex flex-row py-2 px-2 items-center justify-between bg-[${theme.colors.card}]`}
+                style={tw`flex flex-row px-2 items-center justify-between bg-[${theme.colors.card}]`}
             >
                 <Text style={tw`text-[${theme.colors.text}]`}>
-                   Contraer todas las competiciones
+                   {text}
                 </Text>
 
                 <Switch
-                    value={!isSwitchOn}
+                    value={isSwitchOn}
                     onValueChange={onToggleSwitch}
                     trackColor={theme.colors.accent}
                     color={theme.colors.accent}

@@ -72,6 +72,7 @@ const CalendarLeagueTab = () => {
           {
             selectedStage.stageEvents.map((elem, i) => (
               <TouchableNativeFeedback
+                key={i}
                 onPress={() => setSelectedWeek(i)}
               >
                 <View style={tw`flex justify-center items-center bg-[${selectedWeek === i ? theme.colors.card100 : theme.colors.card}] rounded-sm w-[50px] h-[50px]`}>
@@ -93,7 +94,7 @@ const CalendarLeagueTab = () => {
                 }}
               >
                 <View style={tw`bg-[${theme.colors.card}] rounded-sm`}>
-                  <Icon source="chevron-left" color='white' size={50} />
+                  <Icon source="chevron-left" color={theme.colors.text} size={50} />
                 </View>
               </TouchableNativeFeedback>
               :
@@ -106,11 +107,12 @@ const CalendarLeagueTab = () => {
               <TouchableNativeFeedback
                 onPress={() => {
                   setSelectedWeek(selectedWeek + 1)
-                  
+
+
                 }}
               >
                 <View style={tw`bg-[${theme.colors.card}]`}>
-                  <Icon source="chevron-right" color='white' size={50} />
+                  <Icon source="chevron-right" color={theme.colors.text} size={50} />
                 </View>
               </TouchableNativeFeedback>
               :
@@ -126,7 +128,8 @@ const CalendarLeagueTab = () => {
 
   const get_date_string = (date) => {
 
-    const x = convert_timestamp(date)
+    const y = new Date(convert_timestamp(date).dateNext)
+    const x = convert_timestamp(y)
 
     return `${x.month} ${x.year}`
 

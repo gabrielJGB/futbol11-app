@@ -22,6 +22,10 @@ const GameHeader = ({video}) => {
     const homeWinner = home.winner
     const awayWinner = away.winner
 
+    const league_slug = game.data.header.league.slug
+    const season = game.data.header.season.year
+    
+
 
     return (
         <View style={tw`bg-[${theme.colors.card}] flex flex-col `}>
@@ -33,7 +37,7 @@ const GameHeader = ({video}) => {
 
             <View style={tw`flex flex-row items-center justify-evenly`}>
 
-                <GameTeam team={home.team} />
+                <GameTeam team={home.team} league_slug={league_slug} season={season}/>
 
                 <GameScore
                     homeWinner={homeWinner}
@@ -45,7 +49,7 @@ const GameHeader = ({video}) => {
 
                 />
 
-                <GameTeam team={away.team} />
+                <GameTeam team={away.team} league_slug={league_slug} season={season}/>
 
             </View>
 

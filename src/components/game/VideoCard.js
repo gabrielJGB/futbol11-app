@@ -8,7 +8,7 @@ import { useGame } from '../../context/GameContext'
 
 const VideoCard = ({ video }) => {
     const { theme } = useTheme()
-    const {isHDselected} = useGame()
+    
 
     return (
         <View style={tw`bg-[${theme.colors.card}] flex flex-col `}>

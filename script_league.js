@@ -114,7 +114,7 @@ fetchLeague(slug)
     .then(resp => {
 
 
-        fs.writeFile("resp.json", JSON.stringify(resp),
+        fs.writeFile("team_resp.json", JSON.stringify(resp),
             err => {
                 if (err) throw err;
                 console.log("JSON Saved");

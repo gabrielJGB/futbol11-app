@@ -3,13 +3,14 @@ import { View, Text, ScrollView, RefreshControl, TouchableNativeFeedback } from 
 import tw from 'twrnc'
 import { fetchAllLeagues } from '../utils/fetch'
 import LeagueCard from '../components/home/LeagueCard'
-import { date_to_YYYYMMDD } from '../utils/time'
+import { date_to_YYYYMMDD, is_same_day } from '../utils/time'
 import ModalComponent from '../components/home/ModalComponent'
 import { FAB } from 'react-native-paper'
 import LoadingCard from '../components/home/LoadingCard'
 import HomeButtons from '../components/home/HomeButtons'
 import { useTheme } from '../context/ThemeContext'
 import SwitchComponent from '../components/home/SwitchComponent'
+import { useNavigation } from '@react-navigation/native'
 
 
 const HomeScreen = () => {
@@ -17,8 +18,15 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(true)
   const [modalVisible, setModalVisible] = useState(false)
   const [selectedDate, setSelectedDate] = useState(new Date());
-
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const [showOnlyLive, setShowOnlyLive] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+
+  const onToggleSwitch1 = () => setIsSwitchOn(!isSwitchOn);
+  const onToggleSwitch2 = () => setShowOnlyLive(!showOnlyLive);
+
+
+  const navigation = useNavigation()
   const { theme } = useTheme()
 
   useEffect(() => {
@@ -28,15 +36,26 @@ const HomeScreen = () => {
       _fetchAllLeagues()
     }, 1000 * 30)
 
-    return () => clearInterval(intervalId)
 
+    !is_same_day(selectedDate, new Date()) && setShowOnlyLive(false)
+
+    return () => clearInterval(intervalId)
+ 
   }, [selectedDate])
 
   useEffect(() => {
+
+    // BORRAR:      
+    navigation.navigate("Team", { team_id: "5", league_slug: "arg.1", season: "2024" })
+    // navigation.navigate("Game",{id:693422}) 
+
+
     _fetchAllLeagues()
     _fetchAllLeagues()
+    _fetchAllLeagues()
+
   }, [])
-  
+
 
   const _fetchAllLeagues = () => {
 
@@ -54,15 +73,13 @@ const HomeScreen = () => {
 
   };
 
-  const [isSwitchOn, setIsSwitchOn] = React.useState(true);
 
-  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
 
 
   return (
 
-    <View >
+    <View style={tw` h-[100%]`}>
 
       <HomeButtons
         selectedDate={selectedDate}
@@ -73,7 +90,7 @@ const HomeScreen = () => {
       {
         loading ?
           <LoadingCard />
-
+ 
           :
 
           <ScrollView
@@ -81,12 +98,15 @@ const HomeScreen = () => {
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#0000']} enabled />}
           >
 
-            {/* {
-              leagues &&
-              <LeaguesList leagues={leagues}/>
-            } */}
 
-            <SwitchComponent isSwitchOn={isSwitchOn} onToggleSwitch={onToggleSwitch} />
+
+            <SwitchComponent isSwitchOn={isSwitchOn} onToggleSwitch={onToggleSwitch1} text={"Contraer todas las competiciones"} />
+
+            {
+              is_same_day(selectedDate, new Date()) &&
+              <SwitchComponent isSwitchOn={showOnlyLive} onToggleSwitch={onToggleSwitch2} text={"Sólo partidos en vivo"} />
+            }  
+  
 
 
 
@@ -94,7 +114,7 @@ const HomeScreen = () => {
 
               {
                 leagues?.map((league, i) => (
-                  <LeagueCard key={i} league={league} isSwitchOn={isSwitchOn}/>
+                  <LeagueCard key={i} league={league} isSwitchOn={isSwitchOn} showOnlyLive={showOnlyLive} />
                 ))
               }
 
@@ -111,14 +131,14 @@ const HomeScreen = () => {
           </ScrollView>
       }
 
-
       <FAB
         icon="calendar-month"
         color='white'
         mode='elevated'
-        style={tw`absolute bottom-15 right-5 bg-[${theme.colors.accent}]`}
+        style={tw`absolute bottom-5 right-5 bg-[${theme.colors.accent}]`}
         onPress={() => setModalVisible(!modalVisible)}
       />
+
 
     </View>
   )

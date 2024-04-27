@@ -64,18 +64,18 @@ export const translate_title = (title) => {
     title = title.replace("Argentine", "").replace(",", " -").replace("2024", "")
     title = title.replace("Round of 64", "32avos de final")
     title = title.replace("Round of 32", "16avos de final")
-    title = title.replace("Round of 16", "Octavos")
-    title = title.replace("Round of 8", "Cuartos")
+    title = title.replace("Round of 16", "Octavos de final")
+    title = title.replace("Round of 8", "Cuartos de final")
     title = title.replace("Ronda de 64", "32avos de final")
     title = title.replace("Ronda de 32", "16avos de final")
-    title = title.replace("Ronda de 16", "Octavos")
-    title = title.replace("Ronda de 8", "Cuartos")
+    title = title.replace("Ronda de 16", "Octavos de final")
+    title = title.replace("Ronda de 8", "Cuartos de final")
     title = title.replace("First Round", "Primera Ronda")
     title = title.replace("Second Round", "Segunda Ronda")
     title = title.replace("Third Round", "Tercera Ronda")
     title = title.replace("Fourth Round", "Cuarta Ronda")
     title = title.replace("Fifth Round", "Quinta Ronda")
-    title = title.replace("Club Friendly", "")
+    title = title.replace("Club Friendly", "Amistoso")
     title = title.replace("Finals", "Final")
     return title
 
@@ -150,4 +150,23 @@ export const get_detail_icon = (detail) => {
         return <Image source={red_card} style={{ width: SIZE_2, height: SIZE_2 }} />
     else if (detail.scoringPlay)
         return <Image source={ball} style={{ width: SIZE_2, height: SIZE_2 }} />
+}
+
+
+export const live_match = objeto => {
+
+    if (objeto.hasOwnProperty("state") && objeto["state"] === "in") {
+        return true;
+    }
+
+    for (let propiedad in objeto) {
+        if (objeto[propiedad] !== null && typeof objeto[propiedad] === "object") {
+            let resultado = live_match(objeto[propiedad], "state");
+            if (resultado) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }

@@ -1,5 +1,7 @@
 import { convert_timestamp } from '../utils/time'
 
+const infoParams = "region=ar&lang=es"
+
 const divide_array = (array, numeroSubarrays) => {
     const tamanoSubarray = Math.ceil(array.length / numeroSubarrays);
     const subarrays = [];
@@ -113,7 +115,7 @@ export const fetchLeague = async (slug) => {
             const teamCount = standings[0].standings.entries.length
             const tablesCount = standings.length
             const weeksCount = (totalEvents / (teamCount * tablesCount)) * n
-            
+
             const weeksArray = divide_array(stage.stageEvents, weeksCount)
 
             delete stage.stageEvents
@@ -128,3 +130,71 @@ export const fetchLeague = async (slug) => {
     return { ...leagueInfo, standings, teams }
 
 }
+
+
+
+export const fetchTeam = async (teamId, season) => {
+
+
+
+
+    try {
+        //?enable=roster
+        const teamResp1 = await fetch_URL(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/teams/${teamId}/schedule?${infoParams}&season=${season}`)
+
+        if (teamResp1.events.length === 0)
+            throw new Error("Sin datos")
+
+        const teamResp2 = teamResp1.season.year === teamResp1.requestedSeason.year ? await fetch_URL(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/teams/${teamId}/schedule?${infoParams}&fixture=true&season=${season}`) : { events: [] }
+
+        const teamInfo = teamResp1
+        const previousGames = teamResp1.events
+        const nextGames = teamResp2.events
+
+        previousGames.forEach(objeto => {
+            objeto['played'] = true;
+        })
+
+        nextGames.forEach(objeto => {
+            objeto['played'] = false;
+        });
+
+
+        let events = [...previousGames, ...nextGames]
+
+        events.sort((a, b) => {
+            return a.date.localeCompare(b.date);
+        });
+
+
+        const leaguesRepeated = events.map(event => event.league)
+        const seasonLeagues = Array.from(new Set(leaguesRepeated.map(JSON.stringify))).map(JSON.parse)
+        const leagues = seasonLeagues.map(league => ({ ...league, events: events.filter(event => event.league.id === league.id) }))
+
+        delete teamInfo.events
+
+
+
+       
+
+        return { ...teamInfo, leagues }
+
+    } catch (error) {
+        throw error
+    }
+
+}
+
+
+
+export const fetchArticles = async (teamId) => {
+    
+    const resp = await fetch_URL(`https://site.web.api.espn.com/apis/v2/flex?sport=soccer&league=soccer&region=ar&lang=es&contentorigin=deportes&team=${teamId}&limit=22&offset=0&pubkey=soccer-clubhouse`)
+
+    const articles = resp.columns[1].items[0].feed.filter(article => article.type === "dStory")
+
+    return articles
+
+}
+
+

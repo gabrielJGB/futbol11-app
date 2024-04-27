@@ -32,7 +32,7 @@ const LeagueTabsComponent = ({ tabs, video }) => {
 
             }}
 
-            initialRouteName={video ? "Videos" : ""}
+            initialRouteName={"CalendarLeague"}
             backBehavior='none'
 
         >
