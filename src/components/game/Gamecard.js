@@ -64,7 +64,7 @@ const Gamecard = ({ game, team, navigation, teamHistory }) => {
             style={tw.style(`flex flex-col`)}
             onPress={() => { navigation.push("Game", { id: game.id, video: false }) }}
         >
-            <View style={tw`bg-[${theme.colors.card}] flex flex-col px-2 py-4`}>
+            <View style={tw`bg-[${theme.colors.card}] flex flex-col px-2 py-2 pb-3`}>
 
                 <View style={tw`flex flex-row w-full `}>
 

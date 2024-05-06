@@ -21,7 +21,7 @@ const TeamContainer = () => {
   const { team_id, league_slug, season } = route.params
 
   useEffect(() => {
-
+    
     setSelectedLeagueSlug(league_slug)
     setSelectedSeason(season)
 

@@ -6,6 +6,8 @@ import { Button, Divider, Icon } from 'react-native-paper';
 import { penalty, own_goal, ball, boot, red_card, yellow_card, arrow_in, arrow_out } from '../../../../assets/index'
 import tw from 'twrnc'
 import { get_logo } from '../../../utils/match';
+import WebView from 'react-native-webview';
+import { useNavigation } from '@react-navigation/native';
 
 const get_player_color = (position) => {
 
@@ -132,6 +134,7 @@ const Roster = ({ roster }) => {
 const Player = ({ player }) => {
   const { theme } = useTheme()
   const [statsVisible, setStatsVisible] = useState(false)
+  const navigation = useNavigation()
 
   const IMG_SIZE = 12
 
@@ -223,8 +226,8 @@ const Player = ({ player }) => {
               labelStyle={{ fontSize: 14 }}
               mode='outlined'
               style={tw`self-end`}
-              onPress={() => { }}
-            >Info Jugador</Button>
+              onPress={() => navigation.push("Player",{id:player.athlete.id}) }
+            >Ficha Jugador</Button>
           </View>
         </View>
 
@@ -234,16 +237,35 @@ const Player = ({ player }) => {
 }
 
 const LineupsTab = () => {
-  const { game } = useGame()
-  const { theme } = useTheme()
+  const { game, sofaId } = useGame()
+  const { theme, isDarkMode } = useTheme()
   const [selectedIndex, setselectedIndex] = useState(0)
 
 
 
   return (
     <ScrollView>
-      <View style={tw`mb-20 mx-1`}>
+      <View style={tw`mb-20 mx-1 mt-2`}>
+
+        {
+          sofaId &&
+          <View style={tw``}>
+            {/* 
+
+              <Text style={tw`text-[${theme.colors.text}] w-full text-center py-2 text-lg font-semibold`}>ATTACK MOMENTUM</Text>
+              <Text style={tw`text-[${theme.colors.text100}] px-2 pb-2 text-xs `}>Attack Momentum™ te permite seguir el partido en vivo con un algoritmo que muestra la presión de cada equipo a lo largo del tiempo.</Text> */}
+
+            <WebView
+              source={{ uri: `https://widgets.sofascore.com/es-ES/embed/lineups?id=${sofaId}&widgetBackground=${isDarkMode ? "Black" : "Gray"}&v=2` }}
+              style={tw`w-[100%] h-[720px] mb-2  mx-auto bg-[${theme.colors.background}]`}
+            />
+
+          </View>
+        }
+
         <View style={tw`flex flex-row gap-0 justify-center w-full my-3`}>
+
+
           {
             game.data.rosters.map((elem, i) => (
 

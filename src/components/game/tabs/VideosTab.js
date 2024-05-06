@@ -14,9 +14,9 @@ const VideosTab = () => {
 
 
   return (
-    <ScrollView style={tw`flex flex-col mx-1`}>
+    <ScrollView style={tw`mx-1 pt-4`} >
 
-      <View style={tw`mb-20`}>
+      <View style={tw`flex flex-col gap-5 `} >
 {/* 
         <Button
           textColor={theme.colors.text}
@@ -27,9 +27,9 @@ const VideosTab = () => {
         {
           game.data.videos.map((video, i) => (
 
-            <View key={i} style={tw`mt-2`}>
-              <VideoCard video={video} />
-            </View>
+            
+              <VideoCard key={i} video={video} />
+            
           ))
         }
 

@@ -23,7 +23,7 @@ const LeagueContainer = () => {
     useEffect(() => {
 
         fetchLeague(id)
-            .then(resp => setLeague(resp))
+            .then(resp => setLeague({...resp,slug:id}))
             .finally(() => setLoading(false))
 
     }, [])
@@ -33,9 +33,6 @@ const LeagueContainer = () => {
     useEffect(() => {
         navigation.setOptions({
             title: screenTitle,
-
-            // headerRight:()=><Icon source="calendar" size={20} color={theme.colors.text} theme={theme}/>
-
         })
 
     }, [screenTitle]);

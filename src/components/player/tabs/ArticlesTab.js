@@ -1,39 +1,38 @@
-import { View, Text, ScrollView, Dimensions, Image, TouchableNativeFeedback, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { useTeam } from '../../../context/TeamContext'
+import { View, Text, ScrollView, Dimensions, Image, TouchableNativeFeedback } from 'react-native'
+import React from 'react'
+import { usePlayer } from '../../../context/PlayerContext'
 import { useTheme } from '../../../context/ThemeContext'
 import tw from 'twrnc'
-
-import { useNavigation } from '@react-navigation/native'
-import { fetchArticles } from '../../../utils/fetch'
 import { convert_timestamp } from '../../../utils/time'
-import { Divider } from 'react-native-paper'
+import { useNavigation } from '@react-navigation/native'
+import { fetchArticle, fetchVideo } from '../../../utils/fetch'
 
 const ArticlesTab = () => {
-
-  const { team } = useTeam()
   const { theme } = useTheme()
-  const [articles, setArticles] = useState([])
-  const [loading, setLoading] = useState(true)
+  const { player } = usePlayer()
   const navigation = useNavigation()
 
+  const handlePress = (article) => {
 
-  useEffect(() => {
+    const isText = article.type === "dStory"
+    const url = article.links.api.self.href
 
+    if (isText) {
+      fetchArticle(url)
+        .then(article => { navigation.push("Article", { article }) })
 
-    fetchArticles(team.team.id)
-      .then(resp => setArticles(resp))
-      .finally(() => setLoading(false))
-
-  }, [])
-
-
+    }
+    else {
+      fetchVideo(url)
+        .then(video => { navigation.push("Video", { video }) })
+    }
+  }
 
 
   const Card = ({ article }) => {
     return (
       <TouchableNativeFeedback
-        onPress={() => navigation.push("Article", { article, team: team.team })}
+        onPress={() => handlePress(article)}
       >
 
         <View style={tw`bg-[${theme.colors.card}] flex flex-col gap-2  pb-3 rounded-lg shadow shadow-black`}>
@@ -56,26 +55,16 @@ const ArticlesTab = () => {
     )
   }
 
-  if (loading)
-    return <ActivityIndicator color='white' style={{ marginTop: 20 }} size={30} />
 
   return (
     <ScrollView>
-      <View style={tw`mx-1 mt-4s mb-20`}>
+      <View style={tw`flex flex-col gap-6 mx-1 mt-2 mb-60`}>
 
-        <View style={tw`flex flex-col gap-0`}>
-          {
-            articles.map((article, i) => (
-              <View key={i}>
-                <Card key={i} article={article} />
-                {
-                  i != articles.length - 1 &&
-                  <Divider style={tw`bg-[${theme.colors.border}] my-6 h-[1px] w-[80%] mx-auto`} />
-                }
-              </View>
-            ))
-          }
-        </View>
+        {
+          player.news.map((article,i) => (
+            <Card key={i} article={article} />
+          ))
+        }
 
       </View>
     </ScrollView>

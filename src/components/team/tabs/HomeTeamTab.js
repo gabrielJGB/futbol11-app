@@ -9,41 +9,92 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { Picker } from '@react-native-picker/picker'
 import { Button } from 'react-native-paper'
 
-const get_bg_color = (result) => {
-
-    switch (result) {
-
-        case "P":
-            return "#EB1E1C"
-        case "G":
-            return "#00A537"
-        case "E":
-            return "#F7FF32"
-        default:
-            return ""
-
-    }
-
-}
 
 const HomeTeamTab = () => {
 
     const { team, selectedSeason, selectedLeagueSlug, setSelectedLeagueSlug } = useTeam()
     const { theme } = useTheme()
 
-    const [selectedLeagueEvents, setSelectedLEagueEvents] = useState([])
+    const [selectedLeagueEvents, setSelectedLeagueEvents] = useState([])
+    const [leagueName, setLeagueName] = useState("")
+    const [stats, setStats] = useState(false)
     const navigation = useNavigation()
+
+
+
 
 
 
     useEffect(() => {
 
         const league = team.leagues.find(league => league.slug === selectedLeagueSlug)
+        const events = league != undefined ? league.events : team.leagues[0].events
 
-        setSelectedLEagueEvents(league != undefined ? league.events : team.leagues[0].events)
+        setSelectedLeagueEvents(events)
+        setLeagueName(league != undefined ? league.name.replace("Argentine", "") : team.leagues[0].name.replace("Argentine", ""))
+
+    }, [selectedLeagueSlug]) //selectedLeagueSlug
 
 
-    }, [selectedLeagueSlug])
+
+
+    const get_stats = (events) => {
+        let won = 0, lost = 0, tied = 0
+
+
+
+        events.forEach(game => {
+            const _team = game.competitions[0].competitors.find(comp => comp.id === team.team.id)
+            const rival = game.competitions[0].competitors.find(comp => comp.id != team.team.id)
+            const result = _team.winner ? "G" : (rival.winner ? "P" : "E")
+
+            if (game.played)
+                if (result === "G")
+                    won++
+                else if (result === "P")
+                    lost++
+                else if (result === "E")
+                    tied++
+        })
+
+
+        let total = won + lost + tied
+
+        let wonRate = parseInt((won * 100) / total)
+        let tiedRate = parseInt((tied * 100) / total)
+        let lostRate = parseInt((lost * 100) / total)
+
+
+        return won === 0 && tied === 0 && lost === 0 ? false : [
+            { value: won, percentage: wonRate, color: "#00A537", displayName: "Victorias" },
+            { value: tied, percentage: tiedRate, color: "#F7FF32", displayName: "Empates" },
+            { value: lost, percentage: lostRate, color: "#EB1E1C", displayName: "Derrotas" },
+        ]
+
+
+    }
+
+
+
+    const get_bg_color = (result) => {
+
+        switch (result) {
+
+            case "P":
+
+                return "#EB1E1C"
+            case "G":
+
+                return "#00A537"
+            case "E":
+
+                return "#F7FF32"
+            default:
+                return ""
+
+        }
+
+    }
 
 
 
@@ -54,6 +105,9 @@ const HomeTeamTab = () => {
         const _team = game.competitions[0].competitors.find(comp => comp.id === team.team.id)
         const homeAway = _team.homeAway === "home" ? "L" : "V"
         const result = previous ? (_team.winner ? "G" : (rival.winner ? "P" : "E")) : "-"
+
+
+
 
         return (
 
@@ -109,12 +163,31 @@ const HomeTeamTab = () => {
                 </View>
 
                 {
+                    selectedLeagueEvents &&
+                    <View style={tw`mt-4 flex flex-row items-center justify-center w-full`}>
+
+                        {
+
+                            get_stats(selectedLeagueEvents) &&
+
+                            get_stats(selectedLeagueEvents).map((stat, i) => (
+                                <View key={i} style={[tw`w-[${stat.percentage}%] bg-[${stat.color}] py-1`, { minWidth: (stat.percentage != 0 ? "8%" : "0") }]}>
+                                    <Text style={tw`font-semibold text-center text-${i === 1 ? "black" : "white"}`}>{stat.percentage}%</Text>
+                                </View>
+                            ))
+
+                        }
+                    </View>
+                }
+
+
+                {
                     selectedLeagueSlug != "" &&
-                    <Button style={tw`mt-4`} buttonColor='black' textColor='white' mode='outlined' onPress={() => navigation.navigate("League", { id: selectedLeagueSlug })} >Ver competición</Button>
+                    <Button style={tw`mt-8`} buttonColor='black' textColor='white' mode='outlined' onPress={() => navigation.push("League", { id: selectedLeagueSlug })} >Ir a {leagueName}</Button>
                 }
 
             </View>
-        </ScrollView>
+        </ScrollView >
     )
 }
 

@@ -26,7 +26,8 @@ const GameCard = ({ tournament, home, away, id, status, showOnlyLive, date, vide
             case "post":
                 return theme.colors.text
             case "in":
-                return "#FF1B1B"
+                return "#FFFFFF"
+
 
         }
     }
@@ -34,36 +35,40 @@ const GameCard = ({ tournament, home, away, id, status, showOnlyLive, date, vide
     return (
         <TouchableNativeFeedback
             style={tw.style(`flex  flex-col justify-start`)}
-            onPress={() => navigation.navigate("Game", { id, video: false })}
+            onPress={() => navigation.navigate("Game", { id, video })}
         >
-            <View style={tw`${ showOnlyLive && !live_match(status) ? "hidden" : "flex"} flex-col px-2 py-3`}>
+            <View style={tw`${showOnlyLive && !live_match(status) ? "hidden" : "flex"} flex-col px-2 pt-3  pb-2`}>
+
+
+
                 {
                     tournament &&
-                    <Text style={tw`text-[${theme.colors.text100}] text-xs`}>{translate_title(tournament).toUpperCase()}</Text>
+                    <Text style={tw`text-[${theme.colors.text100}] text-xs `}>{translate_title(tournament).toUpperCase()}</Text>
                 }
                 {
                     dateString &&
-                    <View style={tw`w-full flex-row justify-between`}>
+                    <View style={tw`w-full flex-row justify-between `}>
                         <Text style={tw`text-[${theme.colors.text100}] text-xs`}>{gameDate.toUpperCase()}</Text>
                         {/* <Text style={tw`text-[${theme.colors.text100}] text-xs`}>GRUPO A</Text> */}
                     </View>
                 }
+
                 <View style={tw`flex flex-row gap-1 w-full `}>
 
-                    <View style={tw.style(`w-[65%] flex flex-col py-3 `)}>
+                    <View style={tw.style(`w-[65%] flex flex-col pt-2 pb-2 `)}>
                         {<Team key={0} team={home} isStatePre={status.type.state === "pre"} />}
                         {<Team key={1} team={away} isStatePre={status.type.state === "pre"} />}
                     </View>
 
-                    <View style={tw`w-[35%] flex flex-col justify-center gap-1 items-center`}>
+                    <View style={tw` w-[35%] flex flex-col justify-center gap-1 items-center`}>
 
-                        <Text style={tw.style(`font-semibold text-center text-[${get_status_color(status.type.state)}]`)}>
+                        <Text style={tw`${status.type.state === "pre" ? "" : "border-[0px]"}  ${status.type.state === "in" ? "bg-red-800 border-red-600 border-[1px]" : ""}  ${status.type.state === "post" ? "bg-black border-gray-700 border-[1px]" : ""}  rounded-md py-[3px] px-[5px] font-semibold text-center text-white`}>
 
                             {get_status(status.type, date)}
 
                         </Text>
 
-                        {
+                        {/* {
                             video &&
                             <Button
                                 labelStyle={{ fontSize: 14 }}
@@ -72,11 +77,28 @@ const GameCard = ({ tournament, home, away, id, status, showOnlyLive, date, vide
                                 textColor={theme.colors.text}
                                 onPress={() => { navigation.navigate("Game", { id, video: true }) }}
                             >Videos</Button>
+                        } */}
+
+                        {
+                            false && video &&
+                            <Text style={tw`text-[${theme.colors.text}] bg-[${theme.colors.secondary}] border-[1px] text-center border-[${theme.colors.accent}] rounded-md text-xs p-1`}>Video</Text>
                         }
+
 
 
                     </View>
                 </View>
+                {
+                    video &&
+                    <View style={tw`flex-row gap-2 items-center w-full pt-1 pb-2`}>
+                        {/* <Text style={tw`text-[${theme.colors.text}] bg-[${theme.colors.secondary}]text-center  border-[1px]  border-[${theme.colors.accent}] rounded-md text-xs py-1 px-1`}>Video</Text> */}
+                        <Text style={tw`bg-[${theme.colors.secondary}] text-center rounded text-white p-[3px] text-[11px] italic`}>Video</Text>
+
+                        <Text style={tw`text-[${theme.colors.text100}] w-[87%] text-[13px]  italic leading-normal `}>{video.headline}</Text>
+                    </View>
+
+                }
+
             </View>
         </TouchableNativeFeedback>
     )

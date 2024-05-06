@@ -65,7 +65,9 @@ const CalendarLeagueTab = () => {
     return (
 
       <View>
-
+        {/* <View style={tw`w-full bg-[${theme.colors.card}]`}>
+          <View style={tw`bg-[${theme.colors.card100}] h-2 w-1/2 `}></View>
+        </View> */}
 
         <View style={tw`flex flex-row gap-2 flex-wrap justify-center items-center py-4 px-1 `}>
 
@@ -83,6 +85,7 @@ const CalendarLeagueTab = () => {
           }
 
         </View>
+
 
         <View style={tw`flex flex-row items-center justify-between w-full py-2 px-1`}>
           {
@@ -120,6 +123,8 @@ const CalendarLeagueTab = () => {
           }
 
         </View>
+
+
 
       </View>
     )
@@ -159,6 +164,7 @@ const CalendarLeagueTab = () => {
             }
           </View>
 
+
         }
 
         {
@@ -166,12 +172,18 @@ const CalendarLeagueTab = () => {
           <Text style={tw`text-[${theme.colors.text}] mt-2 text-2xl text-center font-semibold`}>{translate_title(selectedStage.name)}</Text>
         }
 
+
+
+
         <View style={tw`flex flex-col gap-2 my-4`}>
+
+
 
           {
             selectedStage.hasStandings && selectedStage.stageEvents.length > 0 &&
             getArrows()
           }
+
 
           {
             selectedStage.stageEvents.length === 0 &&

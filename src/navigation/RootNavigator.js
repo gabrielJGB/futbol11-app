@@ -14,6 +14,7 @@ import PlayerScreen from '../screens/PlayerScreen';
 import TeamScreen from '../screens/TeamScreen';
 import { Text } from 'react-native';
 import ArticleScreen from '../screens/ArticleScreen';
+import VideoScreen from '../screens/VideoScreen';
 
 
 const RootNavigator = () => {
@@ -67,6 +68,7 @@ const RootNavigator = () => {
                     component={PlayerScreen}
                     options={{
                         headerShadowVisible: false,
+                        title:""    
                     }}
 
                 />
@@ -87,6 +89,14 @@ const RootNavigator = () => {
                 />
 
 
+                  <Stack.Screen
+                    name="Video"
+                    component={VideoScreen}
+                    options={{ title: "" }}
+
+                />
+
+
             </Stack.Navigator>
         )
     }
@@ -99,7 +109,7 @@ const RootNavigator = () => {
             <Drawer.Navigator
                 drawerContent={props => <DrawerContent {...props} />}
                 initialRouteName='MainStack'
-                screenOptions={{ headerShown: false, drawerType: "slide" }}
+                screenOptions={{ headerShown: false, drawerType: "front" }}
                 backBehavior='history'
 
             >

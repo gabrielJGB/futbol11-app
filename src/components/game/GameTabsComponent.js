@@ -27,7 +27,8 @@ const GameTabsComponent = ({ tabs, video }) => {
 
       }}
 
-      initialRouteName={video ? "Videos" : ""}
+      // initialRouteName={video ? "Videos" : ""}
+      initialRouteName='Info'
       backBehavior='none'
 
     >
@@ -99,7 +100,7 @@ const GameTabsComponent = ({ tabs, video }) => {
       }
 
       {
-        tabs.videos &&
+        tabs.videos && false &&
 
         <Tab.Screen
           name="Videos"

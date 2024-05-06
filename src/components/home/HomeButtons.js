@@ -12,7 +12,7 @@ const HomeButtons = ({selectedDate,setSelectedDate,setLoading}) => {
     const nextDate =  new Date(selectedDate.getTime() + 86400000)
 
     return (
-        <View style={tw`flex flex-row items-center bg-[${theme.colors.card}] border-[${theme.colors.border}]`}>
+        <View style={tw`flex flex-row items-center bg-[${theme.colors.card}] border-[${theme.colors.background}] border-b-[1px]`}>
 
             <TouchableNativeFeedback
                 onPress={() => {

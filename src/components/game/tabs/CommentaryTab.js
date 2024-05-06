@@ -129,7 +129,7 @@ const CardEvent = ({ text, clock, participants, typeId, typeText, team }) => {
 
 
   return (
-    <View style={tw`bg-[${theme.colors.card}] flex flex-col gap-3 py-3 px-2 shadow shadow-black`}>
+    <View style={tw`bg-[${theme.colors.card}] rounded-lg flex flex-col gap-3 py-3 px-2 shadow shadow-black`}>
       {
         clock != "" &&
         <View style={tw`flex flex-row items-center gap-2`}>

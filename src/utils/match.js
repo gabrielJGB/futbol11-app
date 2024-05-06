@@ -1,17 +1,18 @@
 import { convert_timestamp } from "./time"
 import { logo_404, penalty, red_card, ball } from '../../assets/index'
 import { Image } from "react-native"
+import { Icon } from "react-native-paper"
 
 export const get_flag = (item, SIZE) => {
-    const slug = item.slug.slice(0, 3)
+    const slug =   item.slug.slice(0, 3)
+
     const p = 15
     const arr = ['fif', 'afc', 'clu', 'con', 'uef']
 
 
     if (arr.includes(slug)) {
-        return ""
+        return <Icon source="earth" size={25} color="white" />
     }
-
 
     const logo = `https://a1.espncdn.com/combiner/i?img=/i/teamlogos/countries/500/${item.slug.slice(0, 3)}.png?w=${SIZE + p}&h=${SIZE + p}`
 

@@ -10,10 +10,10 @@ const SwitchComponent = ({ isSwitchOn, onToggleSwitch, text }) => {
     return (
         <TouchableNativeFeedback
             onPress={onToggleSwitch}
-            style={tw`py-2`}
+            style={tw`py-0`}
         >
             <View
-                style={tw`flex flex-row px-2 items-center justify-between bg-[${theme.colors.card}]`}
+                style={tw`flex flex-row px-2 py-2 items-center justify-between bg-[${theme.colors.card}]`}
             >
                 <Text style={tw`text-[${theme.colors.text}]`}>
                    {text}

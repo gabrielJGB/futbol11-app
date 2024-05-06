@@ -14,8 +14,7 @@ const divide_array = (array, numeroSubarrays) => {
     return subarrays;
 }
 
-
-const fetch_URL = async (URL) => {
+export const fetch_URL = async (URL) => {
     const time = new Date().getTime()
     const res = await fetch(`${URL}&_=${time}`)
     const data = await res.json()
@@ -175,7 +174,7 @@ export const fetchTeam = async (teamId, season) => {
 
 
 
-       
+
 
         return { ...teamInfo, leagues }
 
@@ -188,13 +187,147 @@ export const fetchTeam = async (teamId, season) => {
 
 
 export const fetchArticles = async (teamId) => {
-    
-    const resp = await fetch_URL(`https://site.web.api.espn.com/apis/v2/flex?sport=soccer&league=soccer&region=ar&lang=es&contentorigin=deportes&team=${teamId}&limit=22&offset=0&pubkey=soccer-clubhouse`)
 
+    const resp = await fetch_URL(`https://site.web.api.espn.com/apis/v2/flex?sport=soccer&league=soccer&region=ar&lang=es&contentorigin=deportes&team=${teamId}&limit=22&offset=0&pubkey=soccer-clubhouse`)
     const articles = resp.columns[1].items[0].feed.filter(article => article.type === "dStory")
 
     return articles
 
 }
 
+
+export const fetchRoster = async (leagueSlug, teamId, season) => {
+
+    try {
+
+        const resp = await fetch_URL(`https://site.api.espn.com/apis/site/v2/sports/soccer/${leagueSlug}/seasons/${season}/teams/${teamId}?enable=roster&lang=es&region=ar`)
+
+        if (resp.team?.athletes === undefined)
+            throw Error("Sin datos")
+
+
+        if (resp.team.athletes != undefined && resp.team.athletes.length === 0)
+            throw Error("Sin datos")
+
+
+        return resp.team.athletes
+    } catch (error) {
+        throw error
+    }
+}
+
+export const fetchLeagueStats = async (leagueSlug, season) => {
+    try {
+
+        const res = await fetch_URL(`https://site.web.api.espn.com/apis/site/v2/sports/soccer/${leagueSlug}/statistics?region=ar&lang=es&level=1&season=${season}`)
+
+        if (!"stats" in res)
+            throw Error("Sin datos")
+
+        return res.stats
+
+
+    } catch (error) {
+        throw error
+    }
+}
+
+
+export const fetchLeagueArticles = async (leagueId) => {
+    https://site.web.api.espn.com/apis/site/v2/sports/soccer/arg.copa_lpf/news?lang=es&region=ar
+    try {
+
+        const res = await fetch_URL(`https://site.web.api.espn.com/apis/site/v2/sports/soccer/${leagueId}/news?lang=es&region=ar&limit=20`)
+
+        if (!"articles" in res)
+            throw Error("Sin datos")
+
+        return res.articles
+
+
+    } catch (error) {
+        throw error
+    }
+}
+
+
+export const fetchArticle = async (url) => {
+
+    const res = await fetch_URL(url)
+    return res.headlines[0]
+
+}
+
+export const fetchVideo = async (url) => {
+
+    const res = await fetch_URL(url)
+    return res.videos[0]
+
+}
+
+
+
+export const fetchPlayer = async (id) => {
+
+    try {
+
+        const resp1 = await fetch_URL(`https://site.web.api.espn.com/apis/common/v3/sports/soccer/athletes/${id}?region=ar&lang=es`)
+
+
+        const resp2 = await fetch_URL(`https://site.web.api.espn.com/apis/common/v3/sports/soccer/athletes/${id}/overview?region=ar&lang=es`)
+
+        const resp3 = await fetch_URL(`https://site.web.api.espn.com/apis/common/v3/sports/soccer/athletes/${id}/bio?region=ar`)
+
+        const nationalTeamArray = resp3.teamHistory ? resp3.teamHistory.filter(elem => (!elem.slug.includes(".") && !elem.slug.includes("_")) || elem.slug.includes("u17") || elem.slug.includes("u19") || elem.slug.includes("u21") || elem.slug.includes("u20") || elem.slug.includes("u23")) : false
+
+        const clubsArray = resp3.teamHistory ? resp3.teamHistory.filter(elem => elem.slug.includes(".")  && !elem.slug.includes("u17")&& !elem.slug.includes("u19") &&  !elem.slug.includes("u21") && !elem.slug.includes("u20") && !elem.slug.includes("u23")) : false
+
+        const teamHistory = nationalTeamArray && clubsArray ? [ 
+            {
+                displayName: "Clubes",
+                teams: clubsArray
+            },
+            {
+                displayName: "Selección Nacional",
+                teams: nationalTeamArray
+            }
+        ] : false
+
+
+        const videos = resp1.videos != undefined ? resp1.videos : false
+
+        let eventsId = resp2.gameLog.statistics[0].events?.map(event => parseInt(event.eventId))
+        let events = eventsId?.map(eventId => (
+            resp2.gameLog.events[eventId]
+        ))
+
+        events.sort((a, b) => {
+            return b.gameDate - a.gameDate;
+        });
+
+        let gamesResults = events.map(e=>e.gameResult)
+
+        return { ...resp1.athlete, gamesResults,videos, ...resp2, events,teamHistory }
+
+    } catch (error) {
+        throw error
+    }
+
+
+}
+
+// let sofaGameId = sofaEvents.find(event=> 
+//     event.homeTeam.name.toLowerCase().trim() === home.displayName.toLowerCase().trim() ||     
+//     event.homeTeam.shortName.toLowerCase().trim() === home.name.toLowerCase().trim() ||
+    
+//     event.awayTeam.name.toLowerCase().trim() === away.displayName.toLowerCase().trim() ||     
+//     event.awayTeam.shortName.toLowerCase().trim() === away.name.toLowerCase().trim() ||
+    
+//     event.homeTeam.shortName.toLowerCase().trim() === home.name.toLowerCase().trim() ||
+//     event.awayTeam.name.toLowerCase().trim() === away.displayName.toLowerCase().trim() ||
+
+//     event.homeTeam.nameCode.toLowerCase().trim() === home.abbreviation.toLowerCase().trim() ||
+//     event.awayTeam.nameCode.toLowerCase().trim() === away.abbreviation.toLowerCase().trim()
+                
+// )?.id
 

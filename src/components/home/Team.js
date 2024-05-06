@@ -16,7 +16,7 @@ const Team = ({ team,isStatePre }) => {
         <View style={tw.style(`border-[${team.winner ? theme.colors.border100 : theme.colors.border}]`, ` flex flex-row justify-between items-center py-[3px] pr-2 border-r-[2px]`)}>
 
             <View style={tw`flex flex-row gap-2 items-center w-[79%]`} >
-                {get_logo(team, 22)}
+                {get_logo(team, 24)}
 
                 <Text
                     numberOfLines={1}

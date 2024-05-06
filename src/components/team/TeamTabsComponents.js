@@ -50,7 +50,7 @@ const TeamTabsComponent = () => {
         name="RosterTeam"
         component={Roster}
         options={{
-          title: "Jugadores",
+          title: "Plantel",
           lazy: true, lazyPlaceholder: () => (<ActivityIndicator color='white' style={{ marginTop: 20 }} />)
 
         }}

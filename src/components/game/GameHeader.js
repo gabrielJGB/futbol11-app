@@ -35,7 +35,7 @@ const GameHeader = ({video}) => {
                 <Text style={tw`text-[${theme.colors.text200}] text-xs mx-auto`}>{translate_title(stage).toUpperCase()}</Text>
             }
 
-            <View style={tw`flex flex-row items-center justify-evenly`}>
+            <View style={tw`flex flex-row items-center justify-evenly `}>
 
                 <GameTeam team={home.team} league_slug={league_slug} season={season}/>
 
@@ -55,9 +55,8 @@ const GameHeader = ({video}) => {
 
             {
                 details &&
-                <>
                     <GameScorers details={details} homeId={home.id} awayId={away.id} video={video}/>
-                </>
+                
             }
 
 

@@ -45,6 +45,7 @@ export const ThemeProvider = ({ children }) => {
             background: "#E7E7E7",
             card: "#FFFFFF",
             card100:"#E1E1E1",
+            secondary: '#215e40',
             card200:"#CECECE",
             border: "#E6E6E6",
             border100: "#959595",

@@ -16,24 +16,25 @@ export const convert_timestamp = (timestamp) => {
     const diaSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'][fechaUTC.getUTCDay()];
     const mes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'][fechaUTC.getUTCMonth()];
 
-     const date_2 = new Date(fechaUTC.getTime() - 86400000)
-     const dateBefore = date_2.getUTCFullYear().toString() + (date_2.getUTCMonth() + 1).toString().padStart(2, '0') + date_2.getUTCDate().toString().padStart(2, '0');
+    const date_2 = new Date(fechaUTC.getTime() - 86400000)
+    const dateBefore = date_2.getUTCFullYear().toString() + (date_2.getUTCMonth() + 1).toString().padStart(2, '0') + date_2.getUTCDate().toString().padStart(2, '0');
 
-     const dateNext = new Date(fechaUTC.getTime() + 86400000)
-     
+    const dateNext = new Date(fechaUTC.getTime() + 86400000)
+
 
     return {
         time: hora,
         date: fecha,
         dayOfWeek: diaSemana,
         month: mes,
+        monthNum: (fechaUTC.getUTCMonth() + 1).toString().padStart(2, '0'),
         year: fechaUTC.getUTCFullYear(),
         day: fechaUTC.getUTCDate(),
         dateBefore,
         dateNext,
-        DDMMYYYY: `${fechaUTC.getUTCDate().toString().padStart(2, '0')}/${(fechaUTC.getUTCMonth()+1).toString().padStart(2, '0')}`,
-        dateObject :fechaUTC
-        
+        DDMMYYYY: `${fechaUTC.getUTCDate().toString().padStart(2, '0')}/${(fechaUTC.getUTCMonth() + 1).toString().padStart(2, '0')}`,
+        dateObject: fechaUTC
+
     };
 }
 
@@ -61,7 +62,7 @@ export const format_date = (date) => {
     }
 }
 
-export const check_date = (date)=>{
+export const check_date = (date) => {
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -76,10 +77,10 @@ export const check_date = (date)=>{
     } else if (is_same_day(date, yesterday)) {
         return "Ayer"
     }
-    else{
+    else {
         return false
     }
-    
+
 
 
 }

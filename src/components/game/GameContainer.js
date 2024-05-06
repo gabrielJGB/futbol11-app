@@ -14,12 +14,13 @@ const GameContainer = () => {
     const [screenTitle, setScreenTitle] = useState("")
     const [isFullTime, setIsFullTime] = useState(null)
     const [tabs, setTabs] = useState(null)
-    const { setGame } = useGame()
+    const { setGame,setVideo } = useGame()
     const { id, video } = useRoute().params
     const navigation = useNavigation()
 
-
     useEffect(() => {
+        setVideo(video)
+        _fetchGame()
         _fetchGame()
         
         
@@ -33,7 +34,7 @@ const GameContainer = () => {
     }, [isFullTime])
 
 
-
+ 
     useEffect(() => {
         navigation.setOptions({ title: screenTitle  });
     }, [screenTitle]);

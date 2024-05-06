@@ -8,8 +8,8 @@ const GameScore = ({ score, shootout, status, date, homeWinner, awayWinner }) =>
     const { theme } = useTheme()
 
     return (
-        <View style={tw`flex items-center gap-0`}>
-            <View style={tw`flex flex-row gap-[2px]`}>
+        <View style={tw`flex flex-col items-center gap-0`}>
+            <View style={tw`flex flex-row gap-[3px]`}>
                 <Text style={tw`text-[${homeWinner?theme.colors.accent100:theme.colors.text}] text-4xl`} >{score.home}</Text>
                 <Text style={tw`text-[${theme.colors.text}] text-4xl`} >-</Text>
                 <Text style={tw`text-[${awayWinner?theme.colors.accent100:theme.colors.text}] text-4xl`} >{score.away}</Text>
@@ -21,7 +21,7 @@ const GameScore = ({ score, shootout, status, date, homeWinner, awayWinner }) =>
             }
             <View>
                 <Text
-                    style={tw.style(` text-white mt-2 rounded-sm py-[2px] bg-black px-1 font-semibold`, { "bg-red-700": status.state === "in" })}
+                    style={tw.style(` text-white mt-2 text-[13px] rounded-sm py-[2px] bg-black px-1 font-semibold`, { "bg-red-700": status.state === "in" })}
                 >
                     {get_status(status, date)}
                 </Text>

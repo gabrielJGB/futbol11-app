@@ -1,11 +1,14 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { PlayerProvider } from '../context/PlayerContext'
+import PlayerContainer from '../components/player/PlayerContainer'
 
 const PlayerScreen = () => {
+
   return (
-    <View>
-      <Text>PlayerScreen</Text>
-    </View>
+    <PlayerProvider>
+      <PlayerContainer />
+    </PlayerProvider>
   )
 }
 
