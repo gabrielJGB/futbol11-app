@@ -5,7 +5,7 @@ import { useTheme } from '../../../context/ThemeContext'
 import tw from 'twrnc'
 
 import { useNavigation } from '@react-navigation/native'
-import { fetchArticles } from '../../../utils/fetch'
+import { fetchTeamArticles } from '../../../utils/fetch'
 import { convert_timestamp } from '../../../utils/time'
 import { Divider } from 'react-native-paper'
 
@@ -21,7 +21,7 @@ const ArticlesTab = () => {
   useEffect(() => {
 
 
-    fetchArticles(team.team.id)
+    fetchTeamArticles(team.team.id)
       .then(resp => setArticles(resp))
       .finally(() => setLoading(false))
 
@@ -33,7 +33,7 @@ const ArticlesTab = () => {
   const Card = ({ article }) => {
     return (
       <TouchableNativeFeedback
-        onPress={() => navigation.push("Article", { article, team: team.team })}
+        onPress={() => navigation.push("Article", { article })}
       >
 
         <View style={tw`bg-[${theme.colors.card}] flex flex-col gap-2  pb-3 rounded-lg shadow shadow-black`}>

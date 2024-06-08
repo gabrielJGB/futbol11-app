@@ -28,7 +28,7 @@ export const fetchAllLeagues = async (date) => {
     try {
         const num = new Date().getTime()
         const url = `https://site.web.api.espn.com/apis/v2/scoreboard/header?sport=soccer&lang=es&region=ar&dates=${date}&_=${num}`
-        const res = await fetch(url, { cache: "no-store" })
+        const res = await fetch(url)
         const data = await res.json()
         return data.sports[0].leagues
 
@@ -186,7 +186,7 @@ export const fetchTeam = async (teamId, season) => {
 
 
 
-export const fetchArticles = async (teamId) => {
+export const fetchTeamArticles = async (teamId) => {
 
     const resp = await fetch_URL(`https://site.web.api.espn.com/apis/v2/flex?sport=soccer&league=soccer&region=ar&lang=es&contentorigin=deportes&team=${teamId}&limit=22&offset=0&pubkey=soccer-clubhouse`)
     const articles = resp.columns[1].items[0].feed.filter(article => article.type === "dStory")
@@ -254,7 +254,8 @@ export const fetchLeagueArticles = async (leagueId) => {
 export const fetchArticle = async (url) => {
 
     const res = await fetch_URL(url)
-    return res.headlines[0]
+    const article = res.headlines[0]
+    return article
 
 }
 

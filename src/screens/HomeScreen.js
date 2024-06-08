@@ -36,12 +36,12 @@ const HomeScreen = () => {
   useEffect(() => {
     !is_same_day(selectedDate, new Date()) && setShowOnlyLive(false)
     _fetchAllLeagues()
-    
-    const intervalId = setInterval(()=>{
-      _fetchAllLeagues()
-      _fetchAllLeagues()
-    }, 1000 * 30)
-    return () => clearInterval(intervalId)
+
+    // const intervalId = setInterval(()=>{
+    //   _fetchAllLeagues()
+    //   _fetchAllLeagues()
+    // }, 1000 * 30)
+    //return () => clearInterval(intervalId)
 
   }, [selectedDate])
 
@@ -64,7 +64,7 @@ const HomeScreen = () => {
 
 
   useEffect(() => {
- 
+
     // navigation.navigate("Team", { team_id: "5", league_slug: "arg.1", season: "2017" })
     // navigation.navigate("Game", { id: 702161 })
     // navigation.navigate("League",{id:"arg.copa_lpf"}) 
@@ -72,8 +72,11 @@ const HomeScreen = () => {
 
 
     _fetchAllLeagues()
-    _fetchAllLeagues()
-    _fetchAllLeagues() 
+
+    setTimeout(() => {
+      _fetchAllLeagues()
+    }, 1500);
+
 
   }, [])
 

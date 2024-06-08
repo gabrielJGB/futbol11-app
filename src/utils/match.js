@@ -16,7 +16,7 @@ export const get_flag = (item, SIZE) => {
 
     const logo = `https://a1.espncdn.com/combiner/i?img=/i/teamlogos/countries/500/${item.slug.slice(0, 3)}.png?w=${SIZE + p}&h=${SIZE + p}`
 
-    return <Image source={{ uri: logo }} width={SIZE} height={SIZE} />
+    return <Image source={{ uri: logo }} width={SIZE} height={SIZE}  />
 }
 
 export const get_logo = (team_p, SIZE) => {

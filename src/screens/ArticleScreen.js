@@ -39,6 +39,10 @@ const ArticleScreen = () => {
             fontWeight: "400"
         }
     }
+
+
+    
+
     return (
         <ScrollView >
             <View style={tw`bg-[${theme.colors.card}] pb-40`}>
@@ -65,12 +69,12 @@ const ArticleScreen = () => {
                         contentWidth={Dimensions.get('window').width}
                         source={{
                             html: article.story
-                                .replace("<p><alsosee></p>", "")
-                                .replace("<p><inline1></p>", "")
-                                .replace("<p><inline2></p>", "")
-                                .replace("<p><photo1></p>", "")
-                                .replace("<p><video1></p>", "")
-                                .replace("<p><photo1><alsosee><inline1></p>", "")
+                                
+                                .replaceAll("<inline1>", "")
+                                .replaceAll("<inline2>", "")
+                                .replaceAll("<photo1>", "")
+                                .replaceAll("<video1>", "")
+                                .replaceAll("<alsosee>", "")
                         }}
                         tagsStyles={tagsStyles}
                     />

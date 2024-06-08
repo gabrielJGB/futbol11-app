@@ -14,9 +14,9 @@ const VideosTab = () => {
 
 
   return (
-    <ScrollView style={tw`mx-1 pt-4`} >
+    <ScrollView style={tw`mx-1 pt-4 `} >
 
-      <View style={tw`flex flex-col gap-5 `} >
+      <View style={tw`flex flex-col gap-5 mb-20`} >
 {/* 
         <Button
           textColor={theme.colors.text}

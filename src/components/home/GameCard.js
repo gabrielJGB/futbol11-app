@@ -80,8 +80,8 @@ const GameCard = ({ tournament, home, away, id, status, showOnlyLive, date, vide
                         } */}
 
                         {
-                            false && video &&
-                            <Text style={tw`text-[${theme.colors.text}] bg-[${theme.colors.secondary}] border-[1px] text-center border-[${theme.colors.accent}] rounded-md text-xs p-1`}>Video</Text>
+                            //  video &&
+                            // <Text style={tw`text-[${theme.colors.text}] bg-[${theme.colors.secondary}] border-[1px] text-center border-[${theme.colors.accent}] rounded-md text-xs p-1`}>Video</Text>
                         }
 
 
@@ -94,7 +94,9 @@ const GameCard = ({ tournament, home, away, id, status, showOnlyLive, date, vide
                         {/* <Text style={tw`text-[${theme.colors.text}] bg-[${theme.colors.secondary}]text-center  border-[1px]  border-[${theme.colors.accent}] rounded-md text-xs py-1 px-1`}>Video</Text> */}
                         <Text style={tw`bg-[${theme.colors.secondary}] text-center rounded text-white p-[3px] text-[11px] italic`}>Video</Text>
 
-                        <Text style={tw`text-[${theme.colors.text100}] w-[87%] text-[13px]  italic leading-normal `}>{video.headline}</Text>
+                        <Text style={tw`text-[${theme.colors.text100}] w-[87%] text-[13px]  italic leading-normal `}>
+                            {video.headline}
+                        </Text>
                     </View>
 
                 }

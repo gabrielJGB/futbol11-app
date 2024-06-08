@@ -17,6 +17,8 @@ const ArticlesTab = () => {
     const isText = article.type === "dStory"
     const url = article.links.api.self.href
 
+
+
     if (isText) {
       fetchArticle(url)
         .then(article => { navigation.push("Article", { article }) })

@@ -256,7 +256,7 @@ const LineupsTab = () => {
               <Text style={tw`text-[${theme.colors.text100}] px-2 pb-2 text-xs `}>Attack Momentum™ te permite seguir el partido en vivo con un algoritmo que muestra la presión de cada equipo a lo largo del tiempo.</Text> */}
 
             <WebView
-              source={{ uri: `https://widgets.sofascore.com/es-ES/embed/lineups?id=${sofaId}&widgetBackground=${isDarkMode ? "Black" : "Gray"}&v=2` }}
+              source={{ uri: `https://widgets.sofascore.com/es-ES/embed/lineups?id=${sofaId}&widgetTheme=${isDarkMode ? "dark" : "light"}&v=2` }}
               style={tw`w-[100%] h-[720px] mb-2  mx-auto bg-[${theme.colors.background}]`}
             />
 

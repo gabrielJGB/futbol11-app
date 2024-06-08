@@ -89,7 +89,7 @@ const TeamHeader = () => {
                     placeholder='Seleccionar competición'
                     mode='dialog'
                     itemStyle={{ color: "white", backgroundColor: "white" }}
-                    prompt={`Temporada ${selectedSeason}`}
+                    prompt={`Temporada ${selectedSeason}/${selectedSeason+1}`}
                     style={tw`w-[90%] bg-[${theme.colors.card100}] text-[${theme.colors.text}]`}
                     dropdownIconColor={theme.colors.text100}
                     selectedValue={selectedLeagueSlug}

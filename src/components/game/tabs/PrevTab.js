@@ -40,7 +40,7 @@ const PrevTab = ({ navigation }) => {
             <Text style={tw`text-[${theme.colors.text}]  w-full text-center py-2 text-lg font-semibold`}>GOLEADORES</Text>
             <Divider style={tw`bg-[${theme.colors.border}] h-[1px] w-[100%] mx-auto`} />
 
-            <View style={tw`flex flex-row items-center justify-center pt-3 pb-0 gap-0`}>
+            <View style={tw`flex flex-row items-start justify-center pt-3 pb-0 gap-0`}>
               {
 
                 game.data.leaders?.map((elem, i) => (
@@ -62,7 +62,7 @@ const PrevTab = ({ navigation }) => {
 
                             <View style={tw` flex flex-row items-center `}>
                               {/* <Text style={tw`text-[${theme.colors.text100}]`}>{i + 1}.{" "}</Text> */}
-                              <Text style={tw`text-[${theme.colors.text}] px-2 text-center text-[12px]  font-semibold`}>{leader.athlete.fullName.toUpperCase()} </Text>
+                              <Text style={tw`text-[${theme.colors.text}] px-2 text-left text-[12px]  font-semibold`}>{leader.athlete.fullName.toUpperCase()} </Text>
                             </View>
 
                             <View style={tw`flex flex-row justify-center gap-4 `}>

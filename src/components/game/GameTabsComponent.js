@@ -100,7 +100,7 @@ const GameTabsComponent = ({ tabs, video }) => {
       }
 
       {
-        tabs.videos && false &&
+        tabs.videos &&
 
         <Tab.Screen
           name="Videos"

@@ -10,7 +10,7 @@ import { convert_timestamp, is_same_day } from '../../../utils/time';
 import VideoCard from '../VideoCard';
 import { fetch_URL } from '../../../utils/fetch';
 import { useApp } from '../../../context/AppContext';
-import {  useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const InfoTab = () => {
 
@@ -18,7 +18,7 @@ const InfoTab = () => {
   const { theme, isDarkMode } = useTheme()
   const { game, sofaId, video } = useGame()
   const { sofaDate } = useApp()
-  const  navigation  = useNavigation()
+  const navigation = useNavigation()
 
   const gameDate = convert_timestamp(game.data.header.competitions[0].date)
   const dateString = `${gameDate.dayOfWeek} ${gameDate.day} de ${gameDate.month} de ${gameDate.year}, ${gameDate.time} hs`
@@ -26,7 +26,7 @@ const InfoTab = () => {
 
 
   const Card = ({ title, value, icon }) => {
-    
+
 
     value = value === "Ida" ? "Partido de Ida" : value
 
@@ -52,23 +52,27 @@ const InfoTab = () => {
     <ScrollView style={tw`mx-1`}>
       <View style={tw`flex flex-col gap-4 mt-2 mb-20 pt-0`}>
 
-
-        {/* ATTACK MOMENTUM */}
+        {/* VIDEO DESTACADO */}
         {
-          sofaId &&
+          video &&
+
           <View style={tw`bg-[${theme.colors.card}] rounded-lg shadow shadow-black`}>
+            <VideoCard video={video} />
+          </View>
 
+        }
 
-            <Text style={tw`text-[${theme.colors.text}] w-full text-center py-2 text-lg font-semibold`}>ATTACK MOMENTUM</Text>
-            <Text style={tw`text-[${theme.colors.text100}] px-2 pb-2 text-xs `}>Attack Momentum™ te permite seguir el partido en vivo con un algoritmo que muestra la presión de cada equipo a lo largo del tiempo.</Text>
+        {
+          !video && "videos" in game.data && game.data.videos.length > 0 &&
 
-            <WebView
-              source={{ uri: `https://widgets.sofascore.com/es-ES/embed/attackMomentum?id=${sofaId}&widgetBackground=${isDarkMode ? "Black" : "Gray"}&v=2` }}
-              style={tw`w-[97%] h-[194px] mb-2  mx-auto bg-[${theme.colors.card}]`}
-            />
-
+          <View style={tw`bg-[${theme.colors.card}] rounded-lg shadow shadow-black`}>
+            {
+              "videos" in game.data && game.data.videos.length > 0 &&
+              <VideoCard video={game.data.videos[0]} />
+            }
           </View>
         }
+
 
         {/* INFORMACION DEL PARTIDO */}
         <View style={tw`bg-[${theme.colors.card}] rounded-lg shadow shadow-black`}>
@@ -150,22 +154,26 @@ const InfoTab = () => {
 
         </View>
 
+
+
+        {/* ATTACK MOMENTUM */}
         {
-          video &&
-
+          sofaId &&
           <View style={tw`bg-[${theme.colors.card}] rounded-lg shadow shadow-black`}>
-            <VideoCard video={video} />
-          </View>
 
+
+            <Text style={tw`text-[${theme.colors.text}] w-full text-center py-2 text-lg font-semibold`}>ATTACK MOMENTUM</Text>
+            <Text style={tw`text-[${theme.colors.text100}] px-2 pb-2 text-xs `}>Attack Momentum™ te permite seguir el partido en vivo con un algoritmo que muestra la presión de cada equipo a lo largo del tiempo.</Text>
+
+            <WebView
+              source={{ uri: `https://widgets.sofascore.com/es-ES/embed/attackMomentum?id=${sofaId}&widgetTheme=${isDarkMode ? "dark" : "light"}&v=2` }}
+              style={tw`w-[97%] h-[285px] mb-2  mx-auto bg-[${theme.colors.card}]`}
+            />
+
+          </View>
         }
 
-        {/* VIDEO DESTACADO */}
-        <View style={tw`bg-[${theme.colors.card}] rounded-lg shadow shadow-black`}>
-          {
-            "videos" in game.data && game.data.videos.length > 0 &&
-            <VideoCard video={game.data.videos[0]} />
-          }
-        </View>
+
 
         {/* ARTICULO */}
         <View style={tw`bg-[${theme.colors.card}] rounded-lg shadow shadow-black`}>

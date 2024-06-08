@@ -86,7 +86,7 @@ const DrawerContent = ({ navigation }) => {
                 </View>
             </TouchableNativeFeedback>
 
-            <View style={tw`px-1 mb-2`}>
+            <View style={tw`px-1 mt-1 mb-2`}>
                 <TextInput
                     style={tw`bg-[${theme.colors.card100}]`}
                     textColor={theme.colors.text}
